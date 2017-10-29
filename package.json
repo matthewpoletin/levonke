@@ -1,0 +1,7 @@
+{
+	"name": "levonke",
+	"version": "0.0.1",
+	"dependencies": {
+		"restify": "^6.2.3"
+	}
+}

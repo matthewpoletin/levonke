@@ -11,6 +11,8 @@ import IUserRequest from "../backend/community/interface/UserRequest";
 
 export default class UserController extends AbstractController {
 
+    // TODO: fix pagination
+    // TODO: implement pagination in microservice
     public static async readUsers(req: restify.Request, res: restify.Response, next: restify.Next) {
         const page: number = parseInt(req.params.page, 10) || 0;
         try {
@@ -31,7 +33,6 @@ export default class UserController extends AbstractController {
         }
     }
 
-    // TODO: Implement first
     public static async readUser(req: restify.Request, res: restify.Response, next: restify.Next) {
         const userId = parseInt(req.params.id, 10);
         try {
@@ -43,7 +44,7 @@ export default class UserController extends AbstractController {
     }
 
     public static async updateUser(req: restify.Request, res: restify.Response) {
-        const id: number = req.params.id;
+        const id = parseInt(req.params.id, 10);
         const userRequest = req.body;
         return res.json(await UserService.updateUser(id, userRequest));
     }
@@ -54,7 +55,7 @@ export default class UserController extends AbstractController {
             await UserService.deleteUser(userId);
             return res.send(204);
         } catch (error) {
-            return next(new restifyErrors.ServiceUnacailiableError(`userService { deleteUser: userId = ${ userId} } error`));
+            return next(new restifyErrors.ServiceUnavailableError(`userService { deleteUser: userId = ${ userId} } error`));
         }
     }
 

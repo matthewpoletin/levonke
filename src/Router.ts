@@ -3,6 +3,7 @@
 import * as restify from "restify";
 
 import ComponentController from "./controller/ComponentController";
+import ManufacturerController from "./controller/ManufacturerController";
 import ProjectController from "./controller/ProjectController";
 import TeamController from "./controller/TeamController";
 import UserController from "./controller/UserController";
@@ -44,5 +45,12 @@ export default function Router(server: restify.Server) {
     server.get("/components/:id", ComponentController.readComponent);
     server.patch("/components/:id", ComponentController.updateComponent);
     server.del("/components/:id", ComponentController.deleteComponent);
+
+    // MANUFACTURERS
+    server.get("/manufacturers", ManufacturerController.readManufacturers);
+    server.post("/manufacturers", ManufacturerController.createManufacturer);
+    server.get("/manufacturers/:id", ManufacturerController.readManufacturer);
+    server.patch("/manufacturers/:id", ManufacturerController.updateManufacturer);
+    server.del("/manufacturers/:id", ManufacturerController.deleteManufacturer);
 
 }

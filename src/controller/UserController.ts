@@ -7,7 +7,7 @@ import AbstractController from "./AbstractController";
 
 import UserService from "../backend/community/UserService";
 
-import IUserRequest from "../backend/community/interface/UserRequest";
+import IUserRequest from "../backend/community/interface/IUserRequest";
 
 export default class UserController extends AbstractController {
 

@@ -2,8 +2,8 @@
 
 import * as rp from "request-promise";
 
-import IUserRequest from "./interface/UserRequest";
-import IUserResponse from "./interface/UserResponse";
+import IUserRequest from "./interface/IUserRequest";
+import IUserResponse from "./interface/IUserResponse";
 
 import IUserService from "./IUserService";
 

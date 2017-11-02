@@ -1,7 +1,7 @@
 "use strict";
 
-import IUserRequest from "./interface/UserRequest";
-import IUserResponse from "./interface/UserResponse";
+import IUserRequest from "./interface/IUserRequest";
+import IUserResponse from "./interface/IUserResponse";
 
 export default interface IUserService {
 

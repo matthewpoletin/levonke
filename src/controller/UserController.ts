@@ -36,26 +36,26 @@ export default class UserController extends AbstractController {
     public static async readUser(req: restify.Request, res: restify.Response, next: restify.Next) {
         const userId = parseInt(req.params.id, 10);
         try {
-            const user = await UserService.getUser(userId);
-            return res.json(user);
+            const userResponse = await UserService.getUser(userId);
+            return res.json(userResponse);
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailiableErorr(`userService {readUser: userId = ${ userId }} error`));
+            return next(new restifyErrors.ServiceUnavailiableErorr(`UserService {readUser: userId = ${userId}} error`));
         }
     }
 
     public static async updateUser(req: restify.Request, res: restify.Response) {
-        const id = parseInt(req.params.id, 10);
+        const userId = parseInt(req.params.id, 10);
         const userRequest = req.body;
-        return res.json(await UserService.updateUser(id, userRequest));
+        return res.json(await UserService.updateUser(userId, userRequest));
     }
 
     public static async deleteUser(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const userId: number = parseInt(req.params.id, 10);
+        const userId = parseInt(req.params.id, 10);
         try {
             await UserService.deleteUser(userId);
             return res.send(204);
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`userService { deleteUser: userId = ${ userId} } error`));
+            return next(new restifyErrors.ServiceUnavailableError(`UserService { deleteUser: userId = ${userId} } error`));
         }
     }
 

@@ -2,6 +2,7 @@
 
 import * as restify from "restify";
 
+import ProjectController from "./controller/ProjectController";
 import TeamController from "./controller/TeamController";
 import UserController from "./controller/UserController";
 
@@ -28,5 +29,12 @@ export default function Router(server: restify.Server) {
     server.get("/teams/:id", TeamController.readTeam);
     server.patch("/teams/:id", TeamController.updateTeam);
     server.del("/teams/:id", TeamController.deleteTeam);
+
+    // PROJECTS
+    server.get("/projects", ProjectController.readProjects);
+    server.post("/projects", ProjectController.createProject);
+    server.get("/projects/:id", ProjectController.readProject);
+    server.patch("/projects/:id", ProjectController.updateProject);
+    server.del("/projects/:id", ProjectController.deleteProject);
 
 }

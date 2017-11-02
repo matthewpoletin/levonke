@@ -7,8 +7,8 @@ export default interface IUserService {
 
     getUsers(page: number): Promise<IUserResponse[]>;
     createUser(userRequest: IUserRequest): Promise<{ id: number; }>;
-    getUser(id: number): Promise<IUserResponse>;
-    updateUser(id: number, userRequest: IUserRequest): Promise<IUserResponse>;
-    deleteUser(id: number): Promise<void>;
+    getUser(userId: number): Promise<IUserResponse>;
+    updateUser(userId: number, userRequest: IUserRequest): Promise<IUserResponse>;
+    deleteUser(userId: number): Promise<void>;
 
 }

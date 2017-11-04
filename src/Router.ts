@@ -4,9 +4,11 @@ import * as restify from "restify";
 
 import ComponentController from "./controller/ComponentController";
 import ManufacturerController from "./controller/ManufacturerController";
+import OrganizationController from "./controller/OrganizationController";
 import ProjectController from "./controller/ProjectController";
 import TeamController from "./controller/TeamController";
 import UserController from "./controller/UserController";
+import VersionController from "./controller/VersionController";
 
 export default function Router(server: restify.Server) {
 
@@ -18,12 +20,11 @@ export default function Router(server: restify.Server) {
     server.del("/users/:id", UserController.deleteUser);
 
     // ORGANIZATIONS
-    // TODO: implement routing
-    // server.get("/organizations", OrganizationController.readOrganizations);
-    // server.post("/organizations", OrganizationController.createOrganization);
-    // server.get("/organizations/:id", OrganizationController.readOrganization);
-    // server.patch("/organizations/:id", OrganizationController.updateOrganization);
-    // server.del("/organizations/:id", OrganizationController.deleteOrganization);
+    server.get("/organizations", OrganizationController.readOrganizations);
+    server.post("/organizations", OrganizationController.createOrganization);
+    server.get("/organizations/:id", OrganizationController.readOrganization);
+    server.patch("/organizations/:id", OrganizationController.updateOrganization);
+    server.del("/organizations/:id", OrganizationController.deleteOrganization);
 
     // TEAMS
     server.get("/teams", TeamController.readTeams);
@@ -38,6 +39,13 @@ export default function Router(server: restify.Server) {
     server.get("/projects/:id", ProjectController.readProject);
     server.patch("/projects/:id", ProjectController.updateProject);
     server.del("/projects/:id", ProjectController.deleteProject);
+
+    // VERSIONS
+    server.get("/versions", VersionController.readVersions);
+    server.post("/versions", VersionController.createVersion);
+    server.get("/versions/:id", VersionController.readVersion);
+    server.patch("/versions/:id", VersionController.updateVersion);
+    server.del("/versions/:id", VersionController.deleteVersion);
 
     // COMPONENTS
     server.get("/components", ComponentController.readComponents);

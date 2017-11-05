@@ -11,43 +11,58 @@ import ITeamRequest from "../backend/community/interface/ITeamRequest";
 
 export default class TeamController extends AbstractController {
 
-    // TODO: fix pagination
-    // TODO: implement pagination in microservice
-    public static async readTeams(req: restify.Request, res: restify.Response, next: restify.Next) {
-        throw new Error("Method is not implemented yet");
+    public static async getTeams(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const page = parseInt(req.query.page, 10) || 0;
+        const size = parseInt(req.query.size, 10) || 25;
+        try {
+            const teamResponses = await TeamService.getTeams(page, size);
+            res.json(teamResponses);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError("TeamService { getTeams } error"));
+        }
     }
 
     public static async createTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
         const teamRequest: ITeamRequest = req.body;
         try {
             const teamResponse = await TeamService.createTeam(teamRequest);
-            return res.json(201, teamResponse);
+            res.json(201, teamResponse);
+            return next();
         }   catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("Method is not implemented yet"));
+            return next(new restifyErrors.ServiceUnavailableError("TeamService { createTeam } error"));
         }
     }
 
-    public static async readTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async getTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
         const teamId: number = parseInt(req.params.id, 10);
         try {
             const team = await TeamService.getTeam(teamId);
-            return res.json(team);
+            res.json(team);
+            return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailiableError(`teamService {readTeam: teamId = ${ teamId }} error`));
+            return next(new restifyErrors.ServiceUnavailiableError(`teamService { getTeam: teamId = ${ teamId }} error`));
         }
     }
 
     public static async updateTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const teamId = parseInt(req.params.id, 10);
+        const teamId: number = parseInt(req.params.id, 10);
         const teamRequest = req.body;
-        return res.json(await TeamService.updateTeam(teamId, teamRequest));
+        try {
+            const teamResponse = await TeamService.updateTeam(teamId, teamRequest);
+            res.json(teamResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`TeamService { updateTeam: teamId = ${teamId} } error`));
+        }
     }
 
     public static async deleteTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const teamId = parseInt(req.params.id, 10);
+        const teamId: number = parseInt(req.params.id, 10);
         try {
             await TeamService.deleteTeam(teamId);
-            return res.send(204);
+            res.send(204);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`teamService { deleteTeam: teamId = ${ teamId} } error`));
         }

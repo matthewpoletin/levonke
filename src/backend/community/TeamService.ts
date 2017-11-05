@@ -22,8 +22,8 @@ function getOptions(path, params?, body?) {
 
 class TeamService implements ITeamService {
 
-    public async getTeams(page: number): Promise<ITeamResponse[]> {
-        const options = getOptions(`/teams`, {page});
+    public async getTeams(page: number, size: number): Promise<ITeamResponse[]> {
+        const options = getOptions(`/teams`, {page, size});
         return rp.get(options);
     }
 

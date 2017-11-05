@@ -21,8 +21,8 @@ function getOptions(path, params?, body?) {
 
 class OrganizationService implements IOrganizationService {
 
-    public async getOrganizations(page: number): Promise<IOrganizationResponse[]> {
-        const options = getOptions(`/organizations`, {page});
+    public async getOrganizations(page: number, size: number): Promise<IOrganizationResponse[]> {
+        const options = getOptions(`/organizations`, {page, size});
         return rp.get(options);
     }
 

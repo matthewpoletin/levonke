@@ -11,14 +11,13 @@ import IProjectRequest from "../backend/elaboration/interface/IProjectRequest";
 
 export default class ProjectController extends AbstractController {
 
-
-    // TODO: fix pagination
-    // TODO: implement pagination in microservice
-    public static async readProjects(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const page: number = parseInt(req.params.page, 10) || 0;
+    public static async getProjects(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const page: number = parseInt(req.query.page, 10) || 0;
+        const size: number = parseInt(req.query.size, 10) || 25;
         try {
-            const projectResponses = await ProjectService.getProjects(page);
-            return res.json(projectResponses);
+            const projectResponses = await ProjectService.getProjects(page, size);
+            res.json(projectResponses);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError("ProjectService { getProjects } error"));
         }
@@ -28,33 +27,42 @@ export default class ProjectController extends AbstractController {
         const projectRequest: IProjectRequest = req.body;
         try {
             const projectResponse = await ProjectService.createProject(projectRequest);
-            return res.json(201, projectResponse);
+            res.json(201, projectResponse);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError("ProjectService { createProject } error"));
         }
     }
 
-    public static async readProject(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const projectId = parseInt(req.params.id, 10);
+    public static async getProject(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const projectId: number = parseInt(req.params.id, 10);
         try {
             const projectResponse = await ProjectService.getProject(projectId);
-            return res.json(projectResponse);
+            res.json(projectResponse);
+            return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailiableErorr(`ProjectService {readProject: projectId = ${projectId}} error`));
+            return next(new restifyErrors.ServiceUnavailableError(`ProjectService { getProject: projectId = ${projectId}} error`));
         }
     }
 
     public static async updateProject(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const projectId = parseInt(req.params.id, 10);
+        const projectId: number = parseInt(req.params.id, 10);
         const projectRequest = req.body;
-        return res.json(await ProjectService.updateProject(projectId, projectRequest));
+        try {
+            const projectResponse = await ProjectService.updateProject(projectId, projectRequest)
+            res.json(projectResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`UserProject { updateProject: projectId = ${projectId} } error`));
+        }
     }
 
     public static async deleteProject(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const projectId = parseInt(req.body.id, 10);
+        const projectId: number = parseInt(req.body.id, 10);
         try {
             await ProjectService.deleteProject(projectId);
-            return res.send(204);
+            res.send(204);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`ProjectService { deleteProject: projectId = ${projectId} } error`));
         }

@@ -11,13 +11,13 @@ import IManufacturerRequest from "../backend/supply/interface/IManufacturerReque
 
 export default class ManufacturerController extends AbstractController {
 
-    // TODO: fix pagination
-    // TODO: implement pagination in microservice
-    public static async readManufacturers(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const page: number = parseInt(req.params.page, 10) || 0;
+    public static async getManufacturers(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const page: number = parseInt(req.query.page, 10) || 0;
+        const size: number = parseInt(req.query.size, 10) || 25;
         try {
-            const manufacturers = await ManufacturerService.getManufacturers(page);
-            return res.json(manufacturers);
+            const manufacturerResponses = await ManufacturerService.getManufacturers(page, size);
+            res.json(manufacturerResponses);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError("ManufacturerService { getManufacturers } error"));
         }
@@ -27,33 +27,43 @@ export default class ManufacturerController extends AbstractController {
         const manufacturerRequest: IManufacturerRequest = req.body;
         try {
             const manufacturerResponse = await ManufacturerService.createManufacturer(manufacturerRequest);
-            return res.json(201, manufacturerResponse);
+            res.json(201, manufacturerResponse);
+            return next();
         } catch (error) {
-            ManufacturerController.errorHandler(error, res);
+            return next(new restifyErrors.ServiceUnavailableError("UserService { createManufacturer } error"));
         }
     }
 
-    public static async readManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const manufacturerId = parseInt(req.params.id, 10);
+    public static async getManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const manufacturerId: number = parseInt(req.params.id, 10);
         try {
             const manufacturerResponse = await ManufacturerService.getManufacturer(manufacturerId);
-            return res.json(manufacturerResponse);
+            res.json(manufacturerResponse);
+            return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailiableErorr(`ManufacturerService {readManufacturer: manufacturerId = ${manufacturerId}} error`));
+            return next(new restifyErrors.ServiceUnavailableError(`ManufacturerService { getManufacturer: manufacturerId = ${manufacturerId}} error`));
         }
     }
 
-    public static async updateManufacturer(req: restify.Request, res: restify.Response) {
-        const manufacturerId = parseInt(req.params.id, 10);
+    public static async updateManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const manufacturerId: number = parseInt(req.params.id, 10);
         const manufacturerRequest = req.body;
-        return res.json(await ManufacturerService.updateManufacturer(manufacturerId, manufacturerRequest));
+        try {
+            const manufacturerResponse = await ManufacturerService.updateManufacturer(manufacturerId, manufacturerRequest);
+            res.json(manufacturerResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`ManufacturerService {updateUser: manufacturerId = ${manufacturerId}} error`));
+        }
+
     }
 
     public static async deleteManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const manufacturerId = parseInt(req.params.id, 10);
+        const manufacturerId: number = parseInt(req.params.id, 10);
         try {
             await ManufacturerService.deleteManufacturer(manufacturerId);
-            return res.send(204);
+            res.send(204);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`ManufacturerService { deleteManufacturer: manufacturerId = ${manufacturerId} } error`));
         }

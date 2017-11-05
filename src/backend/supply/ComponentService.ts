@@ -21,8 +21,8 @@ function getOptions(path, params?, body?) {
 
 class ComponentService implements IComponentService {
 
-    public async getComponents(page: number): Promise<IComponentResponse[]> {
-        const options = getOptions(`/components`, {page});
+    public async getComponents(page: number, size: number): Promise<IComponentResponse[]> {
+        const options = getOptions(`/components`, {page, size});
         return rp.get(options);
     }
 

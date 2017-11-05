@@ -11,13 +11,13 @@ import IOrganizationRequest from "../backend/community/interface/IOrganizationRe
 
 export default class OrganizationController extends AbstractController {
 
-    // TODO: fix pagination
-    // TODO: implement pagination in microservice
-    public static async readOrganizations(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const page: number = parseInt(req.params.page, 10) || 0;
+    public static async getOrganizations(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const page: number = parseInt(req.query.page, 10) || 0;
+        const size: number = parseInt(req.query.size, 10) || 25;
         try {
-            const organizations = await OrganizationService.getOrganizations(page);
-            return res.json(organizations);
+            const organizationResponses = await OrganizationService.getOrganizations(page, size);
+            res.json(organizationResponses);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError("OrganizationService { getOrganizations } error"));
         }
@@ -27,33 +27,42 @@ export default class OrganizationController extends AbstractController {
         const organizationRequest: IOrganizationRequest = req.body;
         try {
             const organizationResponse = await OrganizationService.createOrganization(organizationRequest);
-            return res.json(201, organizationResponse);
+            res.json(201, organizationResponse);
+            return next();
         } catch (error) {
-            OrganizationController.errorHandler(error, res);
+            return next(new restifyErrors.ServiceUnavailableError("OrganizationService { createOrganization } error"));
         }
     }
 
-    public static async readOrganization(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const organizationId = parseInt(req.params.id, 10);
+    public static async getOrganization(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const organizationId: number = parseInt(req.params.id, 10);
         try {
             const organizationResponse = await OrganizationService.getOrganization(organizationId);
-            return res.json(organizationResponse);
+            res.json(organizationResponse);
+            return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailiableErorr(`OrganizationService {readOrganization: organizationId = ${organizationId}} error`));
+            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { getOrganization: organizationId = ${organizationId}} error`));
         }
     }
 
-    public static async updateOrganization(req: restify.Request, res: restify.Response) {
-        const organizationId = parseInt(req.params.id, 10);
+    public static async updateOrganization(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const organizationId: number = parseInt(req.params.id, 10);
         const organizationRequest = req.body;
-        return res.json(await OrganizationService.updateOrganization(organizationId, organizationRequest));
+        try {
+            const organizationResponse = await OrganizationService.updateOrganization(organizationId, organizationRequest);
+            res.json(organizationResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { updateOrganization: organizationId = ${organizationId} } error`));
+        }
     }
 
     public static async deleteOrganization(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const organizationId = parseInt(req.params.id, 10);
+        const organizationId: number = parseInt(req.params.id, 10);
         try {
             await OrganizationService.deleteOrganization(organizationId);
-            return res.send(204);
+            res.send(204);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { deleteOrganization: organizationId = ${organizationId} } error`));
         }

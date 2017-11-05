@@ -11,13 +11,13 @@ import IUserRequest from "../backend/community/interface/IUserRequest";
 
 export default class UserController extends AbstractController {
 
-    // TODO: fix pagination
-    // TODO: implement pagination in microservice
-    public static async readUsers(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const page: number = parseInt(req.params.page, 10) || 0;
+    public static async getUsers(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const page: number = parseInt(req.query.page, 10) || 0;
+        const size: number = parseInt(req.query.size, 10) || 25;
         try {
-            const users = await UserService.getUsers(page);
-            return res.json(users);
+            const userResponses = await UserService.getUsers(page, size);
+            res.json(userResponses);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError("UserService { getUsers } error"));
         }
@@ -27,33 +27,42 @@ export default class UserController extends AbstractController {
         const userRequest: IUserRequest = req.body;
         try {
             const userResponse = await UserService.createUser(userRequest);
-            return res.json(201, userResponse);
+            res.json(201, userResponse);
+            return next();
         } catch (error) {
-            UserController.errorHandler(error, res);
+            return next(new restifyErrors.ServiceUnavailableError("UserService { createUser } error"));
         }
     }
 
-    public static async readUser(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async getUser(req: restify.Request, res: restify.Response, next: restify.Next) {
         const userId = parseInt(req.params.id, 10);
         try {
             const userResponse = await UserService.getUser(userId);
-            return res.json(userResponse);
+            res.json(userResponse);
+            return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailiableErorr(`UserService {readUser: userId = ${userId}} error`));
+            return next(new restifyErrors.ServiceUnavailableError(`UserService { getUser: userId = ${userId}} error`));
         }
     }
 
-    public static async updateUser(req: restify.Request, res: restify.Response) {
-        const userId = parseInt(req.params.id, 10);
+    public static async updateUser(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const userId: number = parseInt(req.params.id, 10);
         const userRequest = req.body;
-        return res.json(await UserService.updateUser(userId, userRequest));
+        try {
+            const userResponse = await UserService.updateUser(userId, userRequest);
+            res.json(userResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`UserService { updateUser: userId = ${userId} } error`));
+        }
     }
 
     public static async deleteUser(req: restify.Request, res: restify.Response, next: restify.Next) {
         const userId = parseInt(req.params.id, 10);
         try {
             await UserService.deleteUser(userId);
-            return res.send(204);
+            res.send(204);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`UserService { deleteUser: userId = ${userId} } error`));
         }

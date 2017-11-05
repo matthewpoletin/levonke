@@ -23,8 +23,8 @@ function getOptions(path, params?, body?) {
 // TODO: set base uri for 'projects'
 class ProjectService implements IProjectService {
 
-    public async getProjects(page: number): Promise<IProjectResponse[]> {
-        const options = getOptions(`/projects`, {page});
+    public async getProjects(page: number, size: number): Promise<IProjectResponse[]> {
+        const options = getOptions(`/projects`, {page, size});
         return rp.get(options);
     }
 

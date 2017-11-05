@@ -21,8 +21,8 @@ function getOptions(path, params?, body?) {
 
 class ManufacturerService implements IManufacturerService {
 
-    public async getManufacturers(page: number): Promise<IManufacturerResponse[]> {
-        const options = getOptions(`/manufacturers`, {page});
+    public async getManufacturers(page: number, size: number): Promise<IManufacturerResponse[]> {
+        const options = getOptions(`/manufacturers`, {page, size});
         return rp.get(options);
     }
 

@@ -11,13 +11,13 @@ import IComponentRequest from "../backend/supply/interface/IComponentRequest";
 
 export default class ComponentController extends AbstractController {
 
-    // TODO: fix pagination
-    // TODO: implement pagination in microservice
-    public static async readComponents(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const page: number = parseInt(req.params.page, 10) || 0;
+    public static async getComponents(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const page: number = parseInt(req.query.page, 10) || 0;
+        const size: number = parseInt(req.query.size, 10) || 25;
         try {
-            const components = await ComponentService.getComponents(page);
-            return res.json(components);
+            const componentResponses = await ComponentService.getComponents(page, size);
+            res.json(componentResponses);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError("ComponentService { getComponents } error"));
         }
@@ -27,33 +27,42 @@ export default class ComponentController extends AbstractController {
         const componentRequest: IComponentRequest = req.body;
         try {
             const componentResponse = await ComponentService.createComponent(componentRequest);
-            return res.json(201, componentResponse);
+            res.json(201, componentResponse);
+            return next();
         } catch (error) {
-            ComponentController.errorHandler(error, res);
+            return next(new restifyErrors.ServiceUnavailableError("ComponentService { createComponent } error"));
         }
     }
 
-    public static async readComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async getComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
         const componentId = parseInt(req.params.id, 10);
         try {
             const componentResponse = await ComponentService.getComponent(componentId);
-            return res.json(componentResponse);
+            res.json(componentResponse);
+            return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailiableErorr(`ComponentService {readComponent: componentId = ${componentId}} error`));
+            return next(new restifyErrors.ServiceUnavailableError(`ComponentService { getComponent: componentId = ${componentId}} error`));
         }
     }
 
-    public static async updateComponent(req: restify.Request, res: restify.Response) {
-        const componentId = parseInt(req.params.id, 10);
+    public static async updateComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const componentId: number = parseInt(req.params.id, 10);
         const componentRequest = req.body;
-        return res.json(await ComponentService.updateComponent(componentId, componentRequest));
+        try {
+            const componentResponse = await ComponentService.updateComponent(componentId, componentRequest);
+            res.json(componentResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`ComponentService { updateComponent: componentId = ${componentId} } error`));
+        }
     }
 
     public static async deleteComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const componentId = parseInt(req.params.id, 10);
+        const componentId: number = parseInt(req.params.id, 10);
         try {
             await ComponentService.deleteComponent(componentId);
-            return res.send(204);
+            res.send(204);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`ComponentService { deleteComponent: componentId = ${componentId} } error`));
         }

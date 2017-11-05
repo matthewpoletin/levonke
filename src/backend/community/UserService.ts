@@ -21,8 +21,8 @@ function getOptions(path, params?, body?) {
 
 class UserService implements IUserService {
 
-    public async getUsers(page: number): Promise<IUserResponse[]> {
-        const options = getOptions(`/users`, {page});
+    public async getUsers(page: number, size: number): Promise<IUserResponse[]> {
+        const options = getOptions(`/users`, {page, size});
         return rp.get(options);
     }
 

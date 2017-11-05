@@ -21,8 +21,8 @@ function getOptions(path, params?, body?) {
 
 class VersionService implements IVersionService {
 
-    public async getVersions(page: number): Promise<IVersionResponse[]> {
-        const options = getOptions(`/versions`, {page});
+    public async getVersions(page: number, size: number): Promise<IVersionResponse[]> {
+        const options = getOptions(`/versions`, {page, size});
         return rp.get(options);
     }
 

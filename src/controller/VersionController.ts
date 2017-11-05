@@ -11,13 +11,13 @@ import IVersionRequest from "../backend/elaboration/interface/IVersionRequest";
 
 export default class VersionController extends AbstractController {
 
-    // TODO: fix pagination
-    // TODO: implement pagination in microservice
-    public static async readVersions(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const page: number = parseInt(req.params.page, 10) || 0;
+    public static async getVersions(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const page: number = parseInt(req.query.page, 10) || 0;
+        const size: number = parseInt(req.query.size, 10) || 25;
         try {
-            const versions = await VersionService.getVersions(page);
-            return res.json(versions);
+            const versionResponses = await VersionService.getVersions(page, size);
+            res.json(versionResponses);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError("VersionService { getVersions } error"));
         }
@@ -27,33 +27,42 @@ export default class VersionController extends AbstractController {
         const versionRequest: IVersionRequest = req.body;
         try {
             const versionResponse = await VersionService.createVersion(versionRequest);
-            return res.json(201, versionResponse);
+            res.json(201, versionResponse);
+            return next();
         } catch (error) {
-            VersionController.errorHandler(error, res);
+            return next(new restifyErrors.ServiceUnavailableError("VersionService { createVersion } error"));
         }
     }
 
-    public static async readVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const versionId = parseInt(req.params.id, 10);
+    public static async getVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const versionId: number = parseInt(req.params.id, 10);
         try {
             const versionResponse = await VersionService.getVersion(versionId);
-            return res.json(versionResponse);
+            res.json(versionResponse);
+            return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailiableErorr(`VersionService {readVersion: versionId = ${versionId}} error`));
+            return next(new restifyErrors.ServiceUnavailableError(`VersionService { getVersion: versionId = ${versionId}} error`));
         }
     }
 
-    public static async updateVersion(req: restify.Request, res: restify.Response) {
+    public static async updateVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
         const versionId = parseInt(req.params.id, 10);
         const versionRequest = req.body;
-        return res.json(await VersionService.updateVersion(versionId, versionRequest));
+        try {
+            const versionResponse = await VersionService.updateVersion(versionId, versionRequest);
+            res.json(versionResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`VersionService { updateVersion: versionId = ${versionId} } error`));
+        }
     }
 
     public static async deleteVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const versionId = parseInt(req.params.id, 10);
+        const versionId: number = parseInt(req.params.id, 10);
         try {
             await VersionService.deleteVersion(versionId);
-            return res.send(204);
+            res.send(204);
+            return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`VersionService { deleteVersion: versionId = ${versionId} } error`));
         }

@@ -54,8 +54,8 @@ export default function Router(server: restify.Server) {
     // server.del("/teams/:teamId/users/:userId", TeamController.removeUser);
 
     // TODO:
-    // server.get("/teams/:teamId/projects", TeamController.getProjects);
-    // server.post("/teams/:teamId/projects/:userId", TeamController.addProject);
+    server.get("/teams/:teamId/projects", TeamController.getProjects);
+    // server.post("/teams/:teamId/projects/:projectId", TeamController.addProject);
     // server.del("/teams/:teamId/projects/:projectId", TeamController.removeProject);
 
     // PROJECTS
@@ -71,7 +71,7 @@ export default function Router(server: restify.Server) {
     // server.del("/projects/:id/versions/:id", ProjectController.deleteProject);
 
     // TODO:
-    // server.get("/projects/:projectId/team", ProjectController.getTeam);
+    server.get("/projects/:projectId/team", ProjectController.getTeam);
 
     // VERSIONS
     server.get("/versions", VersionController.getVersions);

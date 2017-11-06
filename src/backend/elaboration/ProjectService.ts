@@ -7,6 +7,8 @@ import IProjectResponse from "./interface/IProjectResponse";
 
 import IProjectService from "./IProjectService";
 
+import ITeamResponse from "../community/interface/ITeamResponse";
+
 // TODO: make loaded from a text file
 const apiUrl = "http://localhost:8443/api/elaboration";
 
@@ -48,6 +50,10 @@ class ProjectService implements IProjectService {
         return rp.delete(options);
     }
 
+    public async getProjectsByTeamId(page: number, size: number, teamId: number): Promise<ITeamResponse[]> {
+        const options = getOptions(`/projects`, {teamId});
+        return rp.get(options);
+    }
 }
 
 export default new ProjectService();

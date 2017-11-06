@@ -6,6 +6,7 @@ import restifyErrors from "restify-errors";
 import AbstractController from "./AbstractController";
 
 import TeamService from "../backend/community/TeamService";
+import ProjectService from "../backend/elaboration/ProjectService";
 
 import ITeamRequest from "../backend/community/interface/ITeamRequest";
 
@@ -64,7 +65,18 @@ export default class TeamController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`teamService { deleteTeam: teamId = ${ teamId} } error`));
+            return next(new restifyErrors.ServiceUnavailableError(`teamService { deleteTeam: teamId = ${teamId} } error`));
+        }
+    }
+
+    public static async getProjects(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const teamId: number = parseInt(req.params.teamId, 10);
+        try {
+            const projetResponses = await ProjectService.getProjectsByTeamId(null, null, teamId);
+            res.json(projetResponses);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`projectService { getProjectsByTeamId: teamId = ${teamId} } error`));
         }
     }
 

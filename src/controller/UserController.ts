@@ -35,7 +35,7 @@ export default class UserController extends AbstractController {
     }
 
     public static async getUser(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const userId = parseInt(req.params.id, 10);
+        const userId = parseInt(req.params.userId, 10);
         try {
             const userResponse = await UserService.getUser(userId);
             res.json(userResponse);
@@ -46,7 +46,7 @@ export default class UserController extends AbstractController {
     }
 
     public static async updateUser(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const userId: number = parseInt(req.params.id, 10);
+        const userId: number = parseInt(req.params.userId, 10);
         const userRequest = req.body;
         try {
             const userResponse = await UserService.updateUser(userId, userRequest);
@@ -58,7 +58,7 @@ export default class UserController extends AbstractController {
     }
 
     public static async deleteUser(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const userId = parseInt(req.params.id, 10);
+        const userId = parseInt(req.params.userId, 10);
         try {
             await UserService.deleteUser(userId);
             res.send(204);

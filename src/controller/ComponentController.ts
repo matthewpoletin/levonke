@@ -35,7 +35,7 @@ export default class ComponentController extends AbstractController {
     }
 
     public static async getComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const componentId = parseInt(req.params.id, 10);
+        const componentId = parseInt(req.params.componentId, 10);
         try {
             const componentResponse = await ComponentService.getComponent(componentId);
             res.json(componentResponse);
@@ -46,7 +46,7 @@ export default class ComponentController extends AbstractController {
     }
 
     public static async updateComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const componentId: number = parseInt(req.params.id, 10);
+        const componentId: number = parseInt(req.params.componentId, 10);
         const componentRequest = req.body;
         try {
             const componentResponse = await ComponentService.updateComponent(componentId, componentRequest);
@@ -58,7 +58,7 @@ export default class ComponentController extends AbstractController {
     }
 
     public static async deleteComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const componentId: number = parseInt(req.params.id, 10);
+        const componentId: number = parseInt(req.params.componentId, 10);
         try {
             await ComponentService.deleteComponent(componentId);
             res.send(204);
@@ -68,4 +68,20 @@ export default class ComponentController extends AbstractController {
         }
     }
 
+    // TODO:
+    // public static async setManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
+    //     const componentId: number = parseInt(req.params.componentId, 10);
+    //     const manufacturerId: number = parseInt(req.params.manufacturerId, 10);
+    //     try {
+    //         await ComponentService.getComponent(componentId);
+    //         // await ManufacturerController.
+    //         return next();
+    //     } catch (error) {
+    //         return next(new restifyErrors.ServiceUnavailableError(`ComponentService { setManufacturer: componentId = ${componentId}; manufacturerId = ${manufacturerId} } error`));
+    //     }
+    // }
+    //
+    // public static async getManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
+    //     return next();
+    // }
 }

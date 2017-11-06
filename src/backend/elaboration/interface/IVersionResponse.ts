@@ -2,6 +2,6 @@
 
 export default interface IVersionResponse {
     id: number;
-    major: number;
-    projectId: number;
+    major?: number;
+    projectId?: number;
 }

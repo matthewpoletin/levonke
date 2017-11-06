@@ -6,7 +6,7 @@ import restifyErrors from "restify-errors";
 import AbstractController from "./AbstractController";
 
 import TeamService from "../backend/community/TeamService";
-import {error} from "util";
+
 import ITeamRequest from "../backend/community/interface/ITeamRequest";
 
 export default class TeamController extends AbstractController {
@@ -35,7 +35,7 @@ export default class TeamController extends AbstractController {
     }
 
     public static async getTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const teamId: number = parseInt(req.params.id, 10);
+        const teamId: number = parseInt(req.params.teamId, 10);
         try {
             const team = await TeamService.getTeam(teamId);
             res.json(team);
@@ -46,7 +46,7 @@ export default class TeamController extends AbstractController {
     }
 
     public static async updateTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const teamId: number = parseInt(req.params.id, 10);
+        const teamId: number = parseInt(req.params.teamId, 10);
         const teamRequest = req.body;
         try {
             const teamResponse = await TeamService.updateTeam(teamId, teamRequest);
@@ -58,7 +58,7 @@ export default class TeamController extends AbstractController {
     }
 
     public static async deleteTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const teamId: number = parseInt(req.params.id, 10);
+        const teamId: number = parseInt(req.params.teamId, 10);
         try {
             await TeamService.deleteTeam(teamId);
             res.send(204);

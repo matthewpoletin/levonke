@@ -2,6 +2,6 @@
 
 export default interface IComponentResponse {
     id: number;
-    manufacturerPartNumber: string;
-    manufacturerId: number;
+    manufacturerPartNumber?: string;
+    manufacturerId?: number;
 }

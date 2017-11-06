@@ -35,7 +35,7 @@ export default class VersionController extends AbstractController {
     }
 
     public static async getVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const versionId: number = parseInt(req.params.id, 10);
+        const versionId: number = parseInt(req.params.versionId, 10);
         try {
             const versionResponse = await VersionService.getVersion(versionId);
             res.json(versionResponse);
@@ -46,7 +46,7 @@ export default class VersionController extends AbstractController {
     }
 
     public static async updateVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const versionId = parseInt(req.params.id, 10);
+        const versionId = parseInt(req.params.versionId, 10);
         const versionRequest = req.body;
         try {
             const versionResponse = await VersionService.updateVersion(versionId, versionRequest);
@@ -58,7 +58,7 @@ export default class VersionController extends AbstractController {
     }
 
     public static async deleteVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const versionId: number = parseInt(req.params.id, 10);
+        const versionId: number = parseInt(req.params.versionId, 10);
         try {
             await VersionService.deleteVersion(versionId);
             res.send(204);

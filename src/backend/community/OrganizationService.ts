@@ -46,6 +46,12 @@ class OrganizationService implements IOrganizationService {
         return rp.delete(options);
     }
 
+    // TODO:
+    // public async setOwner(organizationId: number, userId: number): Promise<IOrganizationResponse> {
+    //     const organizationRequest: IOrganizationRequest = {ownerId: userId };
+    //     return this.updateOrganization(organizationId, organizationRequest);
+    // }
+
 }
 
 export default new OrganizationService();

@@ -1,6 +1,6 @@
 "use strict";
 
 export default interface IComponentResponse {
-    manufacturerPartNumber: string;
-    manufacturerId: number;
+    manufacturerPartNumber?: string;
+    manufacturerId?: number;
 }

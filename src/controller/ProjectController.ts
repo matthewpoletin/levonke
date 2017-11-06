@@ -35,7 +35,7 @@ export default class ProjectController extends AbstractController {
     }
 
     public static async getProject(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const projectId: number = parseInt(req.params.id, 10);
+        const projectId: number = parseInt(req.params.projectId, 10);
         try {
             const projectResponse = await ProjectService.getProject(projectId);
             res.json(projectResponse);
@@ -46,10 +46,10 @@ export default class ProjectController extends AbstractController {
     }
 
     public static async updateProject(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const projectId: number = parseInt(req.params.id, 10);
+        const projectId: number = parseInt(req.params.projectId, 10);
         const projectRequest = req.body;
         try {
-            const projectResponse = await ProjectService.updateProject(projectId, projectRequest)
+            const projectResponse = await ProjectService.updateProject(projectId, projectRequest);
             res.json(projectResponse);
             return next();
         } catch (error) {
@@ -58,7 +58,7 @@ export default class ProjectController extends AbstractController {
     }
 
     public static async deleteProject(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const projectId: number = parseInt(req.body.id, 10);
+        const projectId: number = parseInt(req.body.projectId, 10);
         try {
             await ProjectService.deleteProject(projectId);
             res.send(204);

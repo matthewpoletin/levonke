@@ -55,7 +55,6 @@ export default class ManufacturerController extends AbstractController {
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`ManufacturerService {updateUser: manufacturerId = ${manufacturerId}} error`));
         }
-
     }
 
     public static async deleteManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {

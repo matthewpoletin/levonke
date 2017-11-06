@@ -1,6 +1,6 @@
 "use strict";
 
-export default interface IOrganizationResponse {
+export default interface IOrganizationRequest {
     name?: string;
     description?: string;
     pubEmail?: string;

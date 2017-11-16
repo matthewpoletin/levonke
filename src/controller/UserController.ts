@@ -68,4 +68,14 @@ export default class UserController extends AbstractController {
         }
     }
 
+    public static async getTeams(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const userId = parseInt(req.params.userId, 10);
+        try {
+            const teamResponses = await UserService.getTeams(userId);
+            res.json(teamResponses);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`UserService { getTeams: userId = ${userId} } error`));
+        }
+    }
 }

@@ -8,6 +8,10 @@ import AbstractController from "./AbstractController";
 import VersionService from "../backend/elaboration/VersionService";
 
 import IVersionRequest from "../backend/elaboration/interface/IVersionRequest";
+import ComponentService from "../backend/supply/ComponentService";
+
+interface ProjectResponse {
+}
 
 export default class VersionController extends AbstractController {
 
@@ -65,6 +69,55 @@ export default class VersionController extends AbstractController {
             return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`VersionService { deleteVersion: versionId = ${versionId} } error`));
+        }
+    }
+
+    public static async getProject(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const versionId: number = parseInt(req.params.versionId, 10);
+        try {
+            const projectResponse = await VersionService.getProject(versionId);
+            res.json(projectResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`VersionService { deleteVersion: versionId = ${versionId} } error`));
+        }
+    }
+
+    // TODO: uuid
+    public static async getComponents(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const versionId: number = parseInt(req.params.versionId, 10);
+        try {
+            const componentResponses = await VersionService.getComponents(versionId);
+            res.json(componentResponses);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`VersionService { getComponents: versionId = ${versionId} } error`));
+        }
+    }
+
+    public static async addComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const versionId: number = parseInt(req.params.versionId, 10);
+        const componentId: number = parseInt(req.params.componentId, 10);
+        try {
+            const componentRequest = await ComponentService.getComponent(componentId);
+            await VersionService.addComponent(versionId, componentRequest);
+            res.send(201);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`VersionService { addComponent: versionId = ${versionId}; componentId = ${componentId} } error`));
+        }
+    }
+
+    public static async removeComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const versionId: number = parseInt(req.params.versionId, 10);
+        const componentId: number = parseInt(req.params.componentId, 10);
+        try {
+            const componentRequest = await ComponentService.getComponent(componentId);
+            await VersionService.removeComponent(versionId, componentRequest);
+            res.send(201);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`VersionService { removeComponent: versionId = ${versionId}; componentId = ${componentId} } error`));
         }
     }
 

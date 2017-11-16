@@ -19,10 +19,7 @@ export default function Router(server: restify.Server) {
     server.patch("/users/:userId", UserController.updateUser);
     server.del("/users/:userId", UserController.deleteUser);
 
-    // TODO:
-    // server.get("/users/:userId/teams", UserController.getTeams);
-    // server.post("/users/:userId/teams/:teamId", UserController.addTeam);
-    // server.del("/users/:userId/teams/:teamId", UserController.removeTeam);
+    server.get("/users/:userId/teams", UserController.getTeams);
 
     // ORGANIZATIONS
     server.get("/organizations", OrganizationController.getOrganizations);
@@ -31,10 +28,12 @@ export default function Router(server: restify.Server) {
     server.patch("/organizations/:organizationId", OrganizationController.updateOrganization);
     server.del("/organizations/:organizationId", OrganizationController.deleteOrganization);
 
-    // TODO:
-    // server.get("/organizations/:id/owner", OrganizationController.getOwner);
-    // server.post("/organizations/:id/owner/:userId", OrganizationController.setOwner);
-    // server.del("/organizations/:id/owner/:userId", OrganizationController.removeOwner);
+    server.post("/organizations/:organizationId/owner/:userId", OrganizationController.setOwner);
+    server.get("/organizations/:organizationId/owner", OrganizationController.getOwner);
+
+    server.get("/organizations/:organizationId/teams", OrganizationController.getTeams);
+    server.post("/organizations/:organizationId/teams/:organizationId", OrganizationController.addTeam);
+    server.del("/organizations/:organizationId/teams/:organizationId", OrganizationController.removeTeam);
 
     // TEAMS
     server.get("/teams", TeamController.getTeams);
@@ -43,19 +42,15 @@ export default function Router(server: restify.Server) {
     server.patch("/teams/:teamId", TeamController.updateTeam);
     server.del("/teams/:teamId", TeamController.deleteTeam);
 
-    // TODO:
-    // server.get("/teams/:id/organization", TeamController.getOrganization);
-    // server.post("/teams/:id/organization/:organizationId", TeamController.setOrganization);
-    // server.del("/teams/:id/organization/:organizationId", TeamController.deleteOrganization);
 
-    // TODO:
-    // server.get("/teams/:teamId/users", TeamController.getUsers);
-    // server.post("/teams/:teamId/users/:userId", TeamController.addUser);
-    // server.del("/teams/:teamId/users/:userId", TeamController.removeUser);
+    server.get("/teams/:teamId/users", TeamController.getUsers);
+    server.post("/teams/:teamId/users/:userId", TeamController.addUser);
+    server.del("/teams/:teamId/users/:userId", TeamController.removeUser);
 
-    // TODO:
+    server.get("/teams/:teamId/organization", TeamController.getOrganization);
+
     server.get("/teams/:teamId/projects", TeamController.getProjects);
-    // server.post("/teams/:teamId/projects/:projectId", TeamController.addProject);
+    server.post("/teams/:teamId/projects/:projectId", TeamController.addProject);
     // server.del("/teams/:teamId/projects/:projectId", TeamController.removeProject);
 
     // PROJECTS
@@ -65,12 +60,10 @@ export default function Router(server: restify.Server) {
     server.patch("/projects/:projectId", ProjectController.updateProject);
     server.del("/projects/:projectId", ProjectController.deleteProject);
 
-    // TODO:
-    // server.get("/projects/:id/versions", ProjectController.deleteProject);
-    // server.post("/projects/:id/versions/:id", ProjectController.deleteProject);
-    // server.del("/projects/:id/versions/:id", ProjectController.deleteProject);
+    server.get("/projects/:projectId/versions", ProjectController.getVersions);
+    server.post("/projects/:projectId/versions/:versionId", ProjectController.addVersion);
+    // server.del("/projects/:projectId/versions/:versionId", ProjectController.removeVersion);
 
-    // TODO:
     server.get("/projects/:projectId/team", ProjectController.getTeam);
 
     // VERSIONS
@@ -80,15 +73,11 @@ export default function Router(server: restify.Server) {
     server.patch("/versions/:versionId", VersionController.updateVersion);
     server.del("/versions/:versionId", VersionController.deleteVersion);
 
-    // TODO:
-    // server.get("/versions/:id/project", VersionController.getProject);
-    // server.post("/versions/:versionId/project/:projectId", VersionController.addProject);
-    // server.del("/versions/:versionId/project/:projectId", VersionController.removeVersion);
+    server.get("/versions/:id/project", VersionController.getProject);
 
-    // TODO:
-    // server.get("/versions/:id/components", VersionController.getComponents);
-    // server.post("/versions/:versionId/components/:componentId", VersionController.addComponent);
-    // server.del("/versions/:versionId/components/:componentId", VersionController.removeComponent);
+    server.get("/versions/:id/components", VersionController.getComponents);
+    server.post("/versions/:versionId/components/:componentId", VersionController.addComponent);
+    server.del("/versions/:versionId/components/:componentId", VersionController.removeComponent);
 
     // COMPONENTS
     server.get("/components", ComponentController.getComponents);
@@ -104,9 +93,7 @@ export default function Router(server: restify.Server) {
     server.patch("/manufacturers/:manufacturerId", ManufacturerController.updateManufacturer);
     server.del("/manufacturers/:manufacturerId", ManufacturerController.deleteManufacturer);
 
-    // TODO:
-    // server.get("/manufacturers/:manufacturerId/components", ManufacturerController.getComponent);
-    // server.post("/manufacturers/:manufacturerId/components/:componentId", ManufacturerController.getComponent);
-    // server.del("/manufacturers/:manufacturerId/components/:componentId", ManufacturerController.removeComponent);
+    server.get("/manufacturers/:manufacturerId/components", ManufacturerController.getComponents);
+    server.post("/manufacturers/:manufacturerId/components/:componentId", ManufacturerController.addComponent);
 
 }

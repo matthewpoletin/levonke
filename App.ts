@@ -1,7 +1,7 @@
 "use strict";
 
 import * as restify from "restify";
-import router from "./src/Router";
+import Router from "./src/Router";
 
 class App {
     private server: restify.Server;
@@ -18,7 +18,7 @@ class App {
     }
 
     public init(): void {
-        router(this.server);
+        Router(this.server);
         this.server.listen(this.port);
     }
 

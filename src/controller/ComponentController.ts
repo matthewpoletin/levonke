@@ -73,7 +73,7 @@ export default class ComponentController extends AbstractController {
     //     const componentId: number = parseInt(req.params.componentId, 10);
     //     const manufacturerId: number = parseInt(req.params.manufacturerId, 10);
     //     try {
-    //         await ComponentService.getComponent(componentId);
+    //         await ComponentService.addComponent(componentId);
     //         // await ManufacturerController.
     //         return next();
     //     } catch (error) {

@@ -1,6 +1,6 @@
 "use strict";
 
-export default interface IProjectRequest {
+export default interface IProjectResponse {
     id: number;
     name?: string;
     description?: string;

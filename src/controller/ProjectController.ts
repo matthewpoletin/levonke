@@ -69,6 +69,29 @@ export default class ProjectController extends AbstractController {
         }
     }
 
+    public static async getVersions(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const projectId: number = parseInt(req.params.projectId, 10);
+        try {
+            const versionResponses = await ProjectService.getVersions(projectId);
+            res.json(versionResponses);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`ProjectService { getVersions: projectId = ${projectId} } error`));
+        }
+    }
+
+    public static async addVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const projectId: number = parseInt(req.params.projectId, 10);
+        const versionId: number = parseInt(req.params.versionId, 10);
+        try {
+            await ProjectService.addVersion(projectId, versionId);
+            res.send(201);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`ProjectService { addVersion: projectId = ${projectId}; versionId = ${versionId} } error`));
+        }
+    }
+
     public static async getTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
         const projectId: number = parseInt(req.params.projectId, 10);
         try {
@@ -80,4 +103,5 @@ export default class ProjectController extends AbstractController {
             return next(new restifyErrors.ServiceUnavailableError(`ProjectService { deleteProject: projectId = ${projectId} } error`));
         }
     }
+
 }

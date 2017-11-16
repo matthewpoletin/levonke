@@ -7,43 +7,47 @@ import IManufacturerResponse from "./interface/IManufacturerResponse";
 
 import IManufacturerService from "./IManufacturerService";
 
-// TODO: make loaded from a text file
-const apiUrl = "http://localhost:8444/api/supply";
+import getOptions from "./../../Options";
 
-function getOptions(path, params?, body?) {
-    return {
-        body,
-        json: true,
-        qs: params,
-        uri: apiUrl + path,
-    };
-}
+// TODO: make loaded from a text file
+const supplyServiceURL = "http://localhost:8444/api/supply";
 
 class ManufacturerService implements IManufacturerService {
 
-    public async getManufacturers(page: number, size: number): Promise<IManufacturerResponse[]> {
-        const options = getOptions(`/manufacturers`, {page, size});
+    public async getManufacturers(page?: number, size?: number): Promise<IManufacturerResponse[]> {
+        const options = getOptions(supplyServiceURL, `/manufacturers`, {page, size});
         return rp.get(options);
     }
 
     public async createManufacturer(manufacturerRequest: IManufacturerRequest): Promise<{ id: number; }> {
-        const options = getOptions(`/manufacturers`, null, manufacturerRequest);
+        const options = getOptions(supplyServiceURL, `/manufacturers`, null, manufacturerRequest);
         return rp.post(options);
     }
 
     public async getManufacturer(manufacturerId: number): Promise<IManufacturerResponse> {
-        const options = getOptions(`/manufacturers/${manufacturerId}`);
+        const options = getOptions(supplyServiceURL, `/manufacturers/${manufacturerId}`);
         return rp.get(options);
     }
 
     public async updateManufacturer(manufacturerId: number, manufacturerRequest: IManufacturerRequest): Promise<IManufacturerResponse> {
-        const options = getOptions(`/manufacturers/${manufacturerId}`, null, manufacturerRequest);
+        const options = getOptions(supplyServiceURL, `/manufacturers/${manufacturerId}`, null, manufacturerRequest);
         return rp.patch(options);
     }
 
     public async deleteManufacturer(manufacturerId: number): Promise<void> {
-        const options = getOptions(`/manufacturers/${manufacturerId}`);
+        const options = getOptions(supplyServiceURL, `/manufacturers/${manufacturerId}`);
         return rp.delete(options);
+    }
+
+    public async getComponents(manufacturerId: number, page?: number, size?: number): Promise<void> {
+        const options = getOptions(supplyServiceURL, `/manufacturers/${manufacturerId}/components`);
+        return rp.get(options);
+    }
+
+
+    public async addComponent(manufacturerId: number, componentId: number): Promise<void> {
+        const options = getOptions(supplyServiceURL, `/manufacturers/${manufacturerId}/components/${componentId}`);
+        return rp.get(options);
     }
 
 }

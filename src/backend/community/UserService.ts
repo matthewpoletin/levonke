@@ -9,10 +9,9 @@ import IUserService from "./IUserService";
 
 import getOptions from "../../Options";
 
-// TODO: make loaded from a text file
-const communityServiceURL = "http://localhost:8442/api/community";
-const elaborationServiceURL = "http://localhost:8443/api/elaboration";
-const supplyServiceURL = "http://localhost:8444/api/supply";
+import config from "../../../IConfig";
+
+const communityServiceURL = config.Services.Community.url + config.Services.Community.port + config.Services.Community.base;
 
 class UserService implements IUserService {
 

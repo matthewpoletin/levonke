@@ -9,8 +9,10 @@ import IManufacturerService from "./IManufacturerService";
 
 import getOptions from "./../../Options";
 
-// TODO: make loaded from a text file
-const supplyServiceURL = "http://localhost:8444/api/supply";
+import config from "../../../IConfig";
+
+const supplyServiceURL = config.Services.Supply.url + config.Services.Supply.port + config.Services.Supply.base;
+
 
 class ManufacturerService implements IManufacturerService {
 

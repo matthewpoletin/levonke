@@ -12,9 +12,10 @@ import ITeamService from "./ITeamService";
 
 import getOptions from "../../Options";
 
-// TODO: make loaded from a text file
-const communityServiceURL = "http://localhost:8442/api/community";
-const elaborationServiceURL = "http://localhost:8443/api/elaboration";
+import config from "../../../IConfig";
+
+const communityServiceURL = config.Services.Community.url + config.Services.Community.port + config.Services.Community.base;
+const elaborationServiceURL = config.Services.Elaboration.url + config.Services.Elaboration.port + config.Services.Elaboration.base;
 
 class TeamService implements ITeamService {
 

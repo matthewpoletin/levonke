@@ -10,10 +10,10 @@ import IProjectService from "./IProjectService";
 
 import getOptions from "../../Options";
 
-// TODO: make loaded from a text file
-const elaborationServiceURL = "http://localhost:8443/api/elaboration";
+import config from "../../../IConfig";
 
-// TODO: set base uri for 'projects'
+const elaborationServiceURL = config.Services.Elaboration.url + config.Services.Elaboration.port + config.Services.Elaboration.base;
+
 class ProjectService implements IProjectService {
 
     public async getProjects(page: number, size: number): Promise<IProjectResponse[]> {

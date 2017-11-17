@@ -11,8 +11,9 @@ import IOrganizationService from "./IOrganizationService";
 import getOptions from "../../Options";
 import ITeamResponse from "./interface/ITeamResponse";
 
-// TODO: make loaded from a text file
-const communityServiceURL = "http://localhost:8442/api/community";
+import config from "../../../IConfig";
+
+const communityServiceURL = config.Services.Community.url + config.Services.Community.port + config.Services.Community.base;
 
 class OrganizationService implements IOrganizationService {
 

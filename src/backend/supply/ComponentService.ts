@@ -9,8 +9,10 @@ import IComponentService from "./IComponentService";
 
 import getOptions from "./../../Options";
 
-// TODO: make loaded from a text file
-const supplyServiceURL = "http://localhost:8442/api/community";
+import config from "../../../IConfig";
+
+const supplyServiceURL = config.Services.Supply.url + config.Services.Supply.port + config.Services.Supply.base;
+
 
 class ComponentService implements IComponentService {
 

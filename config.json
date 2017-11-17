@@ -1,0 +1,19 @@
+{
+  "Services": {
+    "Community": {
+      "url": "http://localhost:",
+      "port": 8442,
+      "base": "/api/community"
+    },
+    "Elaboration": {
+      "url": "http://localhost:",
+      "port": 8443,
+      "base": "/api/elaboration"
+    },
+    "Supply": {
+      "url": "http://localhost:",
+      "port": 8444,
+      "base": "/api/elaboration"
+    }
+  }
+}

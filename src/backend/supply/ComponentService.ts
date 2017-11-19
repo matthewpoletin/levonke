@@ -16,7 +16,7 @@ const supplyServiceURL = config.Services.Supply.url + config.Services.Supply.por
 
 class ComponentService implements IComponentService {
 
-    public async getComponents(page: number, size: number): Promise<IComponentResponse[]> {
+    public async getComponents(page?: number, size?: number): Promise<IComponentResponse[]> {
         const options = getOptions(supplyServiceURL, `/components`, {page, size});
         return rp.get(options);
     }
@@ -28,6 +28,11 @@ class ComponentService implements IComponentService {
 
     public async getComponent(componentId: number): Promise<IComponentResponse> {
         const options = getOptions(supplyServiceURL, `/components/${componentId}`);
+        return rp.get(options);
+    }
+
+    public async getComponentByUUID(componentUUID: string): Promise<IComponentResponse> {
+        const options = getOptions(supplyServiceURL, `/component`, {uuid: componentUUID});
         return rp.get(options);
     }
 

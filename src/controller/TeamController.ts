@@ -1,7 +1,7 @@
 "use strict";
 
 import * as restify from "restify";
-import restifyErrors from "restify-errors";
+import restifyErrors from "restify-Errors";
 
 import AbstractController from "./AbstractController";
 
@@ -9,6 +9,7 @@ import TeamService from "../backend/community/TeamService";
 import ProjectService from "../backend/elaboration/ProjectService";
 
 import ITeamRequest from "../backend/community/interface/ITeamRequest";
+import IUserResponse from "../backend/community/interface/IUserResponse";
 
 export default class TeamController extends AbstractController {
 
@@ -72,7 +73,7 @@ export default class TeamController extends AbstractController {
     public static async getUsers(req: restify.Request, res: restify.Response, next: restify.Next) {
         const teamId: number = parseInt(req.params.teamId, 10);
         try {
-            const userResponses = await TeamService.getUsers(teamId);
+            const userResponses: IUserResponse[] = await TeamService.getUsers(teamId);
             res.json(userResponses);
             return next();
         } catch (error) {
@@ -85,6 +86,7 @@ export default class TeamController extends AbstractController {
         const userId: number = parseInt(req.params.userId, 10);
         try {
             await TeamService.addUser(teamId, userId);
+            res.send(201);
             return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`teamService{ addUser: teamId = ${teamId}; userId = ${userId} } error`));
@@ -96,6 +98,7 @@ export default class TeamController extends AbstractController {
         const userId: number = parseInt(req.params.userId, 10);
         try {
             await TeamService.removeUser(teamId, userId);
+            res.send(204);
             return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`teamService{ removeUser: teamId = ${teamId}; userId = ${userId} } error`));

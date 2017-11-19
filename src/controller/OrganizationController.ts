@@ -8,7 +8,6 @@ import AbstractController from "./AbstractController";
 import OrganizationService from "../backend/community/OrganizationService";
 
 import IOrganizationRequest from "../backend/community/interface/IOrganizationRequest";
-import UserService from "../backend/community/UserService";
 
 export default class OrganizationController extends AbstractController {
 
@@ -107,7 +106,7 @@ export default class OrganizationController extends AbstractController {
         const organizationId: number = parseInt(req.params.organizationId, 10);
         const teamId: number = parseInt(req.params.teamId, 10);
         try {
-            const teamResponses = await OrganizationService.addTeam(organizationId, teamId);
+            await OrganizationService.addTeam(organizationId, teamId);
             res.send(201);
             return next();
         } catch (error) {
@@ -119,7 +118,7 @@ export default class OrganizationController extends AbstractController {
         const organizationId: number = parseInt(req.params.organizationId, 10);
         const teamId: number = parseInt(req.params.teamId, 10);
         try {
-            const teamResponses = await OrganizationService.removeTeam(organizationId, teamId);
+            await OrganizationService.removeTeam(organizationId, teamId);
             res.send(204);
             return next();
         } catch (error) {

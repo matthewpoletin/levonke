@@ -5,10 +5,10 @@ import restifyErrors from "restify-errors";
 
 import AbstractController from "./AbstractController";
 
+import TeamService from "../backend/community/TeamService";
 import ProjectService from "../backend/elaboration/ProjectService";
 
 import IProjectRequest from "../backend/elaboration/interface/IProjectRequest";
-import TeamService from "../backend/community/TeamService";
 
 export default class ProjectController extends AbstractController {
 

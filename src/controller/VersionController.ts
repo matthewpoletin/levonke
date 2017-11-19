@@ -10,9 +10,6 @@ import VersionService from "../backend/elaboration/VersionService";
 import IVersionRequest from "../backend/elaboration/interface/IVersionRequest";
 import ComponentService from "../backend/supply/ComponentService";
 
-interface ProjectResponse {
-}
-
 export default class VersionController extends AbstractController {
 
     public static async getVersions(req: restify.Request, res: restify.Response, next: restify.Next) {
@@ -83,7 +80,6 @@ export default class VersionController extends AbstractController {
         }
     }
 
-    // TODO: uuid
     public static async getComponents(req: restify.Request, res: restify.Response, next: restify.Next) {
         const versionId: number = parseInt(req.params.versionId, 10);
         try {

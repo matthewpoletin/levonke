@@ -1,7 +1,7 @@
 "use strict";
 
 import * as restify from "restify";
-import restifyErrors from "restify-errors";
+import restifyErrors from "restify-Errors";
 
 import AbstractController from "./AbstractController";
 

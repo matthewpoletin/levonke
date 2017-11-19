@@ -1,6 +1,6 @@
 "use strict";
 
-export default interface IComponentResponse {
+export default interface IComponentRequest {
     uuid?: string;
     manufacturerPartNumber?: string;
     manufacturerId?: number;

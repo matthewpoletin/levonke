@@ -45,6 +45,17 @@ export default class ComponentController extends AbstractController {
         }
     }
 
+    public static async getComponentByUUID(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const componentUUID: string = req.query.uuid;
+        try {
+            const componentResponse = await ComponentService.getComponentByUUID(componentUUID);
+            res.json(componentResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`ComponentService { updateComponent: componentUUID = ${componentUUID} } error`));
+        }
+    }
+
     public static async updateComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
         const componentId: number = parseInt(req.params.componentId, 10);
         const componentRequest = req.body;
@@ -68,20 +79,4 @@ export default class ComponentController extends AbstractController {
         }
     }
 
-    // TODO:
-    // public static async setManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
-    //     const componentId: number = parseInt(req.params.componentId, 10);
-    //     const manufacturerId: number = parseInt(req.params.manufacturerId, 10);
-    //     try {
-    //         await ComponentService.addComponent(componentId);
-    //         // await ManufacturerController.
-    //         return next();
-    //     } catch (error) {
-    //         return next(new restifyErrors.ServiceUnavailableError(`ComponentService { setManufacturer: componentId = ${componentId}; manufacturerId = ${manufacturerId} } error`));
-    //     }
-    // }
-    //
-    // public static async getManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
-    //     return next();
-    // }
 }

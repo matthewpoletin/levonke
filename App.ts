@@ -2,9 +2,10 @@
 
 import * as restify from "restify";
 
+import requestLogging from "./src/RequestLogging";
+
 import Logger from "./Logger";
 import Router from "./src/Router";
-import requestLogging from "./src/RequestLogging";
 
 // noinspection TsLint
 const packageJson = require("./package.json");

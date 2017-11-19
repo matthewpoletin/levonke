@@ -13,5 +13,5 @@ export default function requestLogging() {
         message.push(`Body: ${JSON.stringify(req.body) || null}`);
         Logger.debug(message.join(", "));
         next();
-    }
+    };
 }

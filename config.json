@@ -13,7 +13,7 @@
     "Supply": {
       "url": "http://localhost:",
       "port": 8444,
-      "base": "/api/elaboration"
+      "base": "/api/supply"
     }
   }
 }

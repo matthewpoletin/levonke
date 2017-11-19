@@ -42,7 +42,6 @@ export default function Router(server: restify.Server) {
     server.patch("/teams/:teamId", TeamController.updateTeam);
     server.del("/teams/:teamId", TeamController.deleteTeam);
 
-
     server.get("/teams/:teamId/users", TeamController.getUsers);
     server.post("/teams/:teamId/users/:userId", TeamController.addUser);
     server.del("/teams/:teamId/users/:userId", TeamController.removeUser);
@@ -51,7 +50,6 @@ export default function Router(server: restify.Server) {
 
     server.get("/teams/:teamId/projects", TeamController.getProjects);
     server.post("/teams/:teamId/projects/:projectId", TeamController.addProject);
-    // server.del("/teams/:teamId/projects/:projectId", TeamController.removeProject);
 
     // PROJECTS
     server.get("/projects", ProjectController.getProjects);
@@ -62,7 +60,6 @@ export default function Router(server: restify.Server) {
 
     server.get("/projects/:projectId/versions", ProjectController.getVersions);
     server.post("/projects/:projectId/versions/:versionId", ProjectController.addVersion);
-    // server.del("/projects/:projectId/versions/:versionId", ProjectController.removeVersion);
 
     server.get("/projects/:projectId/team", ProjectController.getTeam);
 
@@ -83,6 +80,7 @@ export default function Router(server: restify.Server) {
     server.get("/components", ComponentController.getComponents);
     server.post("/components", ComponentController.createComponent);
     server.get("/components/:componentId", ComponentController.getComponent);
+    server.get("/component", ComponentController.getComponentByUUID);
     server.patch("/components/:componentId", ComponentController.updateComponent);
     server.del("/components/:componentId", ComponentController.deleteComponent);
 

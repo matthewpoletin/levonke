@@ -4,6 +4,7 @@ import * as restify from "restify";
 
 import Logger from "./Logger";
 import Router from "./src/Router";
+import requestLogging from "./src/RequestLogging";
 
 // noinspection TsLint
 const packageJson = require("./package.json");
@@ -19,6 +20,7 @@ class App {
         });
         this.server.use(restify.plugins.queryParser());
         this.server.use(restify.plugins.bodyParser());
+        this.server.use(requestLogging());
         this.auditLogging();
         this.port = port;
     }

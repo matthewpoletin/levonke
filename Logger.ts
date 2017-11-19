@@ -9,12 +9,12 @@ export default bunyan.createLogger({
     name: `${packageJson.name} v${packageJson.version}`,
     streams: [
         {
-            level: bunyan.INFO,
+            level: bunyan.DEBUG,
             stream: process.stdout,
         },
         {
             level: bunyan.ERROR,
-            stream: process.stderr
+            stream: process.stderr,
         },
     ],
 });

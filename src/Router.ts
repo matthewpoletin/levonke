@@ -49,6 +49,7 @@ export default function Router(server: restify.Server) {
     server.get("/teams/:teamId/organization", TeamController.getOrganization);
 
     server.get("/teams/:teamId/projects", TeamController.getProjects);
+    server.post("/teams/:teamId/projects", TeamController.createProject);
     server.post("/teams/:teamId/projects/:projectId", TeamController.addProject);
 
     // PROJECTS
@@ -70,9 +71,10 @@ export default function Router(server: restify.Server) {
     server.patch("/versions/:versionId", VersionController.updateVersion);
     server.del("/versions/:versionId", VersionController.deleteVersion);
 
-    server.get("/versions/:id/project", VersionController.getProject);
+    server.get("/versions/:versionId/project", VersionController.getProject);
 
-    server.get("/versions/:id/components", VersionController.getComponents);
+    server.post("/versions/:versionId/components", VersionController.createComponent);
+    server.get("/versions/:versionId/components", VersionController.getComponents);
     server.post("/versions/:versionId/components/:componentId", VersionController.addComponent);
     server.del("/versions/:versionId/components/:componentId", VersionController.removeComponent);
 

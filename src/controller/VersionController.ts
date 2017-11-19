@@ -6,9 +6,12 @@ import restifyErrors from "restify-errors";
 import AbstractController from "./AbstractController";
 
 import VersionService from "../backend/elaboration/VersionService";
+import ComponentService from "../backend/supply/ComponentService";
 
 import IVersionRequest from "../backend/elaboration/interface/IVersionRequest";
-import ComponentService from "../backend/supply/ComponentService";
+import IVersionResponse from "../backend/elaboration/interface/IVersionResponse";
+import IComponentRequest from "../backend/supply/interface/IComponentRequest";
+import IComponentResponse from "../backend/supply/interface/IComponentResponse";
 
 export default class VersionController extends AbstractController {
 
@@ -38,7 +41,7 @@ export default class VersionController extends AbstractController {
     public static async getVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
         const versionId: number = parseInt(req.params.versionId, 10);
         try {
-            const versionResponse = await VersionService.getVersion(versionId);
+            const versionResponse: IVersionResponse = await VersionService.getVersion(versionId);
             res.json(versionResponse);
             return next();
         } catch (error) {
@@ -80,10 +83,30 @@ export default class VersionController extends AbstractController {
         }
     }
 
+    public static async createComponent(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const versionId: number = parseInt(req.params.versionId, 10);
+        const componentRequest: IComponentRequest = req.body;
+        try {
+            await VersionService.getVersion(versionId);
+            const componentResponse: IComponentResponse = await ComponentService.createComponent(componentRequest);
+            await VersionService.addComponent(versionId, componentResponse);
+            res.send(201);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`VersionService { createComponent: versionId = ${versionId} } error`));
+        }
+    }
+
     public static async getComponents(req: restify.Request, res: restify.Response, next: restify.Next) {
         const versionId: number = parseInt(req.params.versionId, 10);
+        const componentResponsePromises = []; // -> массив Promise
         try {
-            const componentResponses = await VersionService.getComponents(versionId);
+            const componentUUIDResponses: IComponentResponse[] = await VersionService.getComponents(versionId);
+            componentUUIDResponses.forEach((element) => {
+                const uuid = element.uuid;
+                componentResponsePromises.push(ComponentService.getComponentByUUID(uuid));
+            });
+            const componentResponses = await Promise.all(componentResponsePromises);
             res.json(componentResponses);
             return next();
         } catch (error) {
@@ -116,5 +139,4 @@ export default class VersionController extends AbstractController {
             return next(new restifyErrors.ServiceUnavailableError(`VersionService { removeComponent: versionId = ${versionId}; componentId = ${componentId} } error`));
         }
     }
-
 }

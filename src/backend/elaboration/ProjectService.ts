@@ -21,7 +21,7 @@ class ProjectService implements IProjectService {
         return rp.get(options);
     }
 
-    public async createProject(projectRequest: IProjectRequest): Promise<{ id: number; }> {
+    public async createProject(projectRequest: IProjectRequest): Promise<IProjectResponse> {
         const options = getOptions(elaborationServiceURL, `/projects`, null, projectRequest);
         return rp.post(options);
     }
@@ -41,7 +41,7 @@ class ProjectService implements IProjectService {
         return rp.delete(options);
     }
 
-    public async setTeam(projectId: number, teamId: number): Promise<void> {
+    public async setTeam(projectId: number, teamId: number): Promise<IProjectResponse> {
         const options = getOptions(elaborationServiceURL, `/projects/${projectId}/teams/${teamId}`);
         return rp.post(options);
     }

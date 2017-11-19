@@ -10,6 +10,7 @@ import ProjectService from "../backend/elaboration/ProjectService";
 
 import ITeamRequest from "../backend/community/interface/ITeamRequest";
 import IUserResponse from "../backend/community/interface/IUserResponse";
+import IProjectRequest from "../backend/elaboration/interface/IProjectRequest";
 
 export default class TeamController extends AbstractController {
 
@@ -125,6 +126,20 @@ export default class TeamController extends AbstractController {
             return next();
         } catch (error) {
             return next(new restifyErrors.ServiceUnavailableError(`teamService { getProjects: teamId = ${teamId} } error`));
+        }
+    }
+
+    public static async createProject(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const teamId: number = parseInt(req.params.teamId, 10);
+        const projectRequest: IProjectRequest = req.body;
+        try {
+            await TeamService.getTeam(teamId);
+            let projectResponse = await ProjectService.createProject(projectRequest);
+            projectResponse = await ProjectService.setTeam(projectResponse.id, teamId);
+            res.json(201, projectResponse);
+            return next();
+        } catch (error) {
+            return next(new restifyErrors.ServiceUnavailableError(`teamService { createProject: teamId = ${teamId} } error`));
         }
     }
 

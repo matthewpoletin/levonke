@@ -1,7 +1,7 @@
 "use strict";
 
 export default interface IComponentResponse {
-    id: number;
+    id?: number;
     uuid?: string;
     manufacturerPartNumber?: string;
     manufacturerId?: number;

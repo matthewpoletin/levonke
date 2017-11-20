@@ -1,7 +1,6 @@
 "use strict";
 
 import * as restify from "restify";
-import restifyErrors from "restify-Errors";
 
 import AbstractController from "./AbstractController";
 
@@ -22,7 +21,7 @@ export default class TeamController extends AbstractController {
             res.json(teamResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("TeamService { getTeams } error"));
+            this.errorResponse(error, res, next, `TeamService { getTeams } error`);
         }
     }
 
@@ -33,7 +32,7 @@ export default class TeamController extends AbstractController {
             res.json(201, teamResponse);
             return next();
         }   catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("TeamService { createTeam } error"));
+            this.errorResponse(error, res, next, `TeamService { createTeam } error`);
         }
     }
 
@@ -44,7 +43,7 @@ export default class TeamController extends AbstractController {
             res.json(team);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailiableError(`teamService { getTeam: teamId = ${ teamId }} error`));
+            this.errorResponse(error, res, next, `teamService { getTeam: teamId = ${ teamId }} error`);
         }
     }
 
@@ -56,7 +55,7 @@ export default class TeamController extends AbstractController {
             res.json(teamResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`TeamService { updateTeam: teamId = ${teamId} } error`));
+            this.errorResponse(error, res, next, `TeamService { updateTeam: teamId = ${teamId} } error`);
         }
     }
 
@@ -67,7 +66,7 @@ export default class TeamController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`teamService { deleteTeam: teamId = ${teamId} } error`));
+            this.errorResponse(error, res, next, `teamService { deleteTeam: teamId = ${teamId} } error`);
         }
     }
 
@@ -78,7 +77,7 @@ export default class TeamController extends AbstractController {
             res.json(userResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`teamService{ getUsers: teamId = ${teamId} } error`));
+            this.errorResponse(error, res, next, `teamService{ getUsers: teamId = ${teamId} } error`);
         }
     }
 
@@ -90,7 +89,7 @@ export default class TeamController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`teamService{ addUser: teamId = ${teamId}; userId = ${userId} } error`));
+            this.errorResponse(error, res, next, `teamService{ addUser: teamId = ${teamId}; userId = ${userId} } error`);
         }
     }
 
@@ -102,7 +101,7 @@ export default class TeamController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`teamService{ removeUser: teamId = ${teamId}; userId = ${userId} } error`));
+            this.errorResponse(error, res, next, `teamService{ removeUser: teamId = ${teamId}; userId = ${userId} } error`);
         }
     }
 
@@ -113,7 +112,7 @@ export default class TeamController extends AbstractController {
             res.json(organizationResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`teamService { getOrganization: teamId = ${teamId} } error`));
+            this.errorResponse(error, res, next, `teamService { getOrganization: teamId = ${teamId} } error`);
         }
     }
 
@@ -125,7 +124,7 @@ export default class TeamController extends AbstractController {
             res.json(projectResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`teamService { getProjects: teamId = ${teamId} } error`));
+            this.errorResponse(error, res, next, `teamService { getProjects: teamId = ${teamId} } error`);
         }
     }
 
@@ -139,7 +138,7 @@ export default class TeamController extends AbstractController {
             res.json(201, projectResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`teamService { createProject: teamId = ${teamId} } error`));
+            this.errorResponse(error, res, next, `teamService { createProject: teamId = ${teamId} } error`);
         }
     }
 
@@ -152,7 +151,7 @@ export default class TeamController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`teamService { addProject: teamId = ${teamId}; projectId = ${projectId} } error`));
+            this.errorResponse(error, res, next, `teamService { addProject: teamId = ${teamId}; projectId = ${projectId} } error`);
         }
     }
 

@@ -1,7 +1,6 @@
 "use strict";
 
 import * as restify from "restify";
-import restifyErrors from "restify-errors";
 
 import AbstractController from "./AbstractController";
 
@@ -19,7 +18,7 @@ export default class ComponentController extends AbstractController {
             res.json(componentResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("ComponentService { getComponents } error"));
+            this.errorResponse(error, res, next, `ComponentService { getComponents } error`);
         }
     }
 
@@ -30,7 +29,7 @@ export default class ComponentController extends AbstractController {
             res.json(201, componentResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("ComponentService { createComponent } error"));
+            this.errorResponse(error, res, next, `ComponentService { createComponent } error`);
         }
     }
 
@@ -41,7 +40,7 @@ export default class ComponentController extends AbstractController {
             res.json(componentResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`ComponentService { getComponent: componentId = ${componentId}} error`));
+            this.errorResponse(error, res, next, `ComponentService { getComponent: componentId = ${componentId}} error`);
         }
     }
 
@@ -52,7 +51,7 @@ export default class ComponentController extends AbstractController {
             res.json(componentResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`ComponentService { updateComponent: componentUUID = ${componentUUID} } error`));
+            this.errorResponse(error, res, next, `ComponentService { updateComponent: componentUUID = ${componentUUID} } error`);
         }
     }
 
@@ -64,7 +63,7 @@ export default class ComponentController extends AbstractController {
             res.json(componentResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`ComponentService { updateComponent: componentId = ${componentId} } error`));
+            this.errorResponse(error, res, next, `ComponentService { updateComponent: componentId = ${componentId} } error`);
         }
     }
 
@@ -75,7 +74,7 @@ export default class ComponentController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`ComponentService { deleteComponent: componentId = ${componentId} } error`));
+            this.errorResponse(error, res, next, `ComponentService { deleteComponent: componentId = ${componentId} } error`);
         }
     }
 

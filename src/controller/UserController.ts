@@ -1,7 +1,6 @@
 "use strict";
 
 import * as restify from "restify";
-import restifyErrors from "restify-Errors";
 
 import AbstractController from "./AbstractController";
 
@@ -19,7 +18,7 @@ export default class UserController extends AbstractController {
             res.json(userResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("UserService { getUsers } error"));
+            this.errorResponse(error, res, next, `UserService { getUsers } error`);
         }
     }
 
@@ -30,7 +29,7 @@ export default class UserController extends AbstractController {
             res.json(201, userResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("UserService { createUser } error"));
+            this.errorResponse(error, res, next, `UserService { createUser } error`);
         }
     }
 
@@ -41,7 +40,7 @@ export default class UserController extends AbstractController {
             res.json(userResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`UserService { getUser: userId = ${userId}} error`));
+            this.errorResponse(error, res, next, `UserService { getUser: userId = ${userId}} error`);
         }
     }
 
@@ -53,7 +52,7 @@ export default class UserController extends AbstractController {
             res.json(userResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`UserService { updateUser: userId = ${userId} } error`));
+            this.errorResponse(error, res, next, `UserService { updateUser: userId = ${userId} } error`);
         }
     }
 
@@ -64,7 +63,7 @@ export default class UserController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`UserService { deleteUser: userId = ${userId} } error`));
+            this.errorResponse(error, res, next, `UserService { deleteUser: userId = ${userId} } error`);
         }
     }
 
@@ -75,7 +74,7 @@ export default class UserController extends AbstractController {
             res.json(teamResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`UserService { getTeams: userId = ${userId} } error`));
+            this.errorResponse(error, res, next, `UserService { getTeams: userId = ${userId} } error`);
         }
     }
 }

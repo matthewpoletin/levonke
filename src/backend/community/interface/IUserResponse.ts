@@ -3,7 +3,7 @@
 export default interface IUserResponse {
     id: number;
     username?: string;
-    firstname?: string;
+    forename?: string;
     surname?: string;
     regEmail?: string;
     pubEmail?: string;

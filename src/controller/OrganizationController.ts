@@ -1,7 +1,6 @@
 "use strict";
 
 import * as restify from "restify";
-import restifyErrors from "restify-errors";
 
 import AbstractController from "./AbstractController";
 
@@ -19,7 +18,7 @@ export default class OrganizationController extends AbstractController {
             res.json(organizationResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("OrganizationService { getOrganizations } error"));
+            this.errorResponse(error, res, next, `OrganizationService { getOrganizations } error`);
         }
     }
 
@@ -30,7 +29,7 @@ export default class OrganizationController extends AbstractController {
             res.json(201, organizationResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("OrganizationService { createOrganization } error"));
+            this.errorResponse(error, res, next, `OrganizationService { createOrganization } error`);
         }
     }
 
@@ -41,7 +40,7 @@ export default class OrganizationController extends AbstractController {
             res.json(organizationResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { getOrganization: organizationId = ${organizationId}} error`));
+            this.errorResponse(error, res, next, `OrganizationService { getOrganization: organizationId = ${organizationId}} error`);
         }
     }
 
@@ -53,7 +52,7 @@ export default class OrganizationController extends AbstractController {
             res.json(organizationResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { updateOrganization: organizationId = ${organizationId} } error`));
+            this.errorResponse(error, res, next, `OrganizationService { updateOrganization: organizationId = ${organizationId} } error`);
         }
     }
 
@@ -64,7 +63,7 @@ export default class OrganizationController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { deleteOrganization: organizationId = ${organizationId} } error`));
+            this.errorResponse(error, res, next, `OrganizationService { deleteOrganization: organizationId = ${organizationId} } error`);
         }
     }
 
@@ -76,7 +75,7 @@ export default class OrganizationController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { setOwner: organizationId = ${organizationId}, userId = ${userId} } error`));
+            this.errorResponse(error, res, next, `OrganizationService { setOwner: organizationId = ${organizationId}, userId = ${userId} } error`);
         }
     }
 
@@ -87,7 +86,7 @@ export default class OrganizationController extends AbstractController {
             res.json(userResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { getOwner: organizationId = ${organizationId} } error`));
+            this.errorResponse(error, res, next, `OrganizationService { getOwner: organizationId = ${organizationId} } error`);
         }
     }
 
@@ -98,7 +97,7 @@ export default class OrganizationController extends AbstractController {
             res.json(teamResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { getTeams: organizationId = ${organizationId} } error`));
+            this.errorResponse(error, res, next, `OrganizationService { getTeams: organizationId = ${organizationId} } error`);
         }
     }
 
@@ -110,7 +109,7 @@ export default class OrganizationController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { addTeam: organizationId = ${organizationId}; teamId = ${teamId} } error`));
+            this.errorResponse(error, res, next, `OrganizationService { addTeam: organizationId = ${organizationId}; teamId = ${teamId} } error`);
         }
     }
 
@@ -122,7 +121,7 @@ export default class OrganizationController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`OrganizationService { removeTeam: organizationId = ${organizationId}; teamId = ${teamId} } error`));
+            this.errorResponse(error, res, next, `OrganizationService { removeTeam: organizationId = ${organizationId}; teamId = ${teamId} } error`);
         }
     }
 

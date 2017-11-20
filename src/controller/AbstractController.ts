@@ -4,7 +4,7 @@ import Logger from "../../Logger";
 import * as Errors from "../Errors";
 
 import * as restify from "restify";
-import * as errs from "restify-Errors";
+import * as errs from "restify-errors";
 
 export default abstract class AbstractController {
 

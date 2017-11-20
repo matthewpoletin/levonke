@@ -2,6 +2,7 @@
 
 import * as rp from "request-promise";
 
+import ITeamResponse from "./interface/ITeamResponse";
 import IUserRequest from "./interface/IUserRequest";
 import IUserResponse from "./interface/IUserResponse";
 
@@ -15,7 +16,7 @@ const communityServiceURL = config.Services.Community.url + config.Services.Comm
 
 class UserService implements IUserService {
 
-    public async getUsers(page: number, size: number): Promise<IUserResponse[]> {
+    public async getUsers(page?: number, size?: number): Promise<IUserResponse[]> {
         const options = getOptions(communityServiceURL, `/users`, {page, size});
         return rp.get(options);
     }
@@ -40,8 +41,8 @@ class UserService implements IUserService {
         return rp.delete(options);
     }
 
-    public async getTeams(userId: number): Promise<void> {
-        const options = getOptions(communityServiceURL, `/users/${userId}/teams`);
+    public async getTeams(userId: number, page?: number, size?: number): Promise<ITeamResponse[]> {
+        const options = getOptions(communityServiceURL, `/users/${userId}/teams`, {page, size});
         return rp.get(options);
     }
 

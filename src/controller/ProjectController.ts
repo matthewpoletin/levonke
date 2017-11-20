@@ -1,7 +1,6 @@
 "use strict";
 
 import * as restify from "restify";
-import restifyErrors from "restify-errors";
 
 import AbstractController from "./AbstractController";
 
@@ -20,7 +19,7 @@ export default class ProjectController extends AbstractController {
             res.json(projectResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("ProjectService { getProjects } error"));
+            this.errorResponse(error, res, next, `ProjectService { getProjects } error`);
         }
     }
 
@@ -31,7 +30,7 @@ export default class ProjectController extends AbstractController {
             res.json(201, projectResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError("ProjectService { createProject } error"));
+            this.errorResponse(error, res, next, `ProjectService { createProject } error`);
         }
     }
 
@@ -42,7 +41,7 @@ export default class ProjectController extends AbstractController {
             res.json(projectResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`ProjectService { getProject: projectId = ${projectId}} error`));
+            this.errorResponse(error, res, next, `ProjectService { getProject: projectId = ${projectId}} error`);
         }
     }
 
@@ -54,7 +53,7 @@ export default class ProjectController extends AbstractController {
             res.json(projectResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`UserProject { updateProject: projectId = ${projectId} } error`));
+            this.errorResponse(error, res, next, `UserProject { updateProject: projectId = ${projectId} } error`);
         }
     }
 
@@ -65,7 +64,7 @@ export default class ProjectController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`ProjectService { deleteProject: projectId = ${projectId} } error`));
+            this.errorResponse(error, res, next, `ProjectService { deleteProject: projectId = ${projectId} } error`);
         }
     }
 
@@ -76,7 +75,7 @@ export default class ProjectController extends AbstractController {
             res.json(versionResponses);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`ProjectService { getVersions: projectId = ${projectId} } error`));
+            this.errorResponse(error, res, next, `ProjectService { getVersions: projectId = ${projectId} } error`);
         }
     }
 
@@ -88,7 +87,7 @@ export default class ProjectController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`ProjectService { addVersion: projectId = ${projectId}; versionId = ${versionId} } error`));
+            this.errorResponse(error, res, next, `ProjectService { addVersion: projectId = ${projectId}; versionId = ${versionId} } error`);
         }
     }
 
@@ -100,7 +99,7 @@ export default class ProjectController extends AbstractController {
             res.json(teamResponse);
             return next();
         } catch (error) {
-            return next(new restifyErrors.ServiceUnavailableError(`ProjectService { deleteProject: projectId = ${projectId} } error`));
+            this.errorResponse(error, res, next, `ProjectService { deleteProject: projectId = ${projectId} } error`);
         }
     }
 

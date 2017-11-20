@@ -33,3 +33,21 @@ export function generateLink() {
     return `${randomString(10)}.com/${randomString(8)}`;
 }
 
+export function generateId() {
+    return Math.ceil(Math.random() * 100);
+}
+
+export function randomInteger(max: number, min?: number) {
+    let rand = min + Math.random() * (max + 1 - min);
+    rand = Math.floor(rand);
+    return rand;
+}
+
+export function generateUUID() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4();
+}

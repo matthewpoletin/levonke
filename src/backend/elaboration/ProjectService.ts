@@ -16,7 +16,7 @@ const elaborationServiceURL = config.Services.Elaboration.url + config.Services.
 
 class ProjectService implements IProjectService {
 
-    public async getProjects(page: number, size: number): Promise<IProjectResponse[]> {
+    public async getProjects(page?: number, size?: number): Promise<IProjectResponse[]> {
         const options = getOptions(elaborationServiceURL, `/projects`, {page, size});
         return rp.get(options);
     }

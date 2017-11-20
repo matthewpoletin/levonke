@@ -40,5 +40,8 @@ typings/
 # Generated d.ts
 *.d.ts
 
+# Generated test results
+.nyc_output
+
 # Mac only
 .DS_Store

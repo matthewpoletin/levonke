@@ -10,6 +10,7 @@
       "interface-over-type-literal": false,
       "max-classes-per-file": [true, 10],
       "no-console": [false],
-      "variable-name": ["allow-leading-underscore"]
+      "variable-name": ["allow-leading-underscore"],
+      "no-namespace": [true, "allow-declarations"]
     }
   }

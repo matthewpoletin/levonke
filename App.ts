@@ -35,9 +35,9 @@ class App {
 
     private auditLogging() {
         this.server.on("after", restify.plugins.auditLogger({
-                event: "after",
-                log: Logger,
-                server: this.server,
+            event: "after",
+            log: Logger,
+            server: this.server,
         }));
     }
 

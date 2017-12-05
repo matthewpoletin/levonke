@@ -18,7 +18,7 @@ export default class ManufacturerController extends AbstractController {
             res.json(manufacturerResponses);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `ManufacturerService { getManufacturers } error`);
+            ManufacturerController.errorResponse(error, res, next, `ManufacturerService { getManufacturers } error`);
         }
     }
 
@@ -29,7 +29,7 @@ export default class ManufacturerController extends AbstractController {
             res.json(201, manufacturerResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `UserService { createManufacturer } error`);
+            ManufacturerController.errorResponse(error, res, next, `UserService { createManufacturer } error`);
         }
     }
 
@@ -40,7 +40,7 @@ export default class ManufacturerController extends AbstractController {
             res.json(manufacturerResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `ManufacturerService { getManufacturer: manufacturerId = ${manufacturerId}} error`);
+            ManufacturerController.errorResponse(error, res, next, `ManufacturerService { getManufacturer: manufacturerId = ${manufacturerId}} error`);
         }
     }
 
@@ -52,7 +52,7 @@ export default class ManufacturerController extends AbstractController {
             res.json(manufacturerResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `ManufacturerService {updateUser: manufacturerId = ${manufacturerId}} error`);
+            ManufacturerController.errorResponse(error, res, next, `ManufacturerService {updateUser: manufacturerId = ${manufacturerId}} error`);
         }
     }
 
@@ -63,7 +63,7 @@ export default class ManufacturerController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `ManufacturerService { deleteManufacturer: manufacturerId = ${manufacturerId} } error`);
+            ManufacturerController.errorResponse(error, res, next, `ManufacturerService { deleteManufacturer: manufacturerId = ${manufacturerId} } error`);
         }
     }
 
@@ -74,7 +74,7 @@ export default class ManufacturerController extends AbstractController {
             res.json(componentResponses);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `ManufacturerService { getComponents: manufacturerId = ${manufacturerId} } error`);
+            ManufacturerController.errorResponse(error, res, next, `ManufacturerService { getComponents: manufacturerId = ${manufacturerId} } error`);
         }
     }
 
@@ -86,7 +86,7 @@ export default class ManufacturerController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `ManufacturerService { addComponents: manufacturerId = ${manufacturerId} } error`);
+            ManufacturerController.errorResponse(error, res, next, `ManufacturerService { addComponents: manufacturerId = ${manufacturerId} } error`);
         }
     }
 

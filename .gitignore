@@ -45,3 +45,7 @@ typings/
 
 # Mac only
 .DS_Store
+
+# Exclude queue files
+!src/queue/repository.js
+!src/queue/repository.d.ts

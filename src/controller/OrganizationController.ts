@@ -18,7 +18,7 @@ export default class OrganizationController extends AbstractController {
             res.json(organizationResponses);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { getOrganizations } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { getOrganizations } error`);
         }
     }
 
@@ -29,7 +29,7 @@ export default class OrganizationController extends AbstractController {
             res.json(201, organizationResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { createOrganization } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { createOrganization } error`);
         }
     }
 
@@ -40,7 +40,7 @@ export default class OrganizationController extends AbstractController {
             res.json(organizationResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { getOrganization: organizationId = ${organizationId}} error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { getOrganization: organizationId = ${organizationId}} error`);
         }
     }
 
@@ -52,7 +52,7 @@ export default class OrganizationController extends AbstractController {
             res.json(organizationResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { updateOrganization: organizationId = ${organizationId} } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { updateOrganization: organizationId = ${organizationId} } error`);
         }
     }
 
@@ -63,7 +63,7 @@ export default class OrganizationController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { deleteOrganization: organizationId = ${organizationId} } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { deleteOrganization: organizationId = ${organizationId} } error`);
         }
     }
 
@@ -75,7 +75,7 @@ export default class OrganizationController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { setOwner: organizationId = ${organizationId}, userId = ${userId} } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { setOwner: organizationId = ${organizationId}, userId = ${userId} } error`);
         }
     }
 
@@ -86,7 +86,7 @@ export default class OrganizationController extends AbstractController {
             res.json(userResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { getOwner: organizationId = ${organizationId} } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { getOwner: organizationId = ${organizationId} } error`);
         }
     }
 
@@ -97,7 +97,7 @@ export default class OrganizationController extends AbstractController {
             res.json(teamResponses);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { getTeams: organizationId = ${organizationId} } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { getTeams: organizationId = ${organizationId} } error`);
         }
     }
 
@@ -109,7 +109,7 @@ export default class OrganizationController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { addTeam: organizationId = ${organizationId}; teamId = ${teamId} } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { addTeam: organizationId = ${organizationId}; teamId = ${teamId} } error`);
         }
     }
 
@@ -121,7 +121,7 @@ export default class OrganizationController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `OrganizationService { removeTeam: organizationId = ${organizationId}; teamId = ${teamId} } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { removeTeam: organizationId = ${organizationId}; teamId = ${teamId} } error`);
         }
     }
 

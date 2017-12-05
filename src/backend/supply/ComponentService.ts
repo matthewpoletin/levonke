@@ -13,7 +13,6 @@ import config from "../../../IConfig";
 
 const supplyServiceURL = config.Services.Supply.url + config.Services.Supply.port + config.Services.Supply.base;
 
-
 class ComponentService implements IComponentService {
 
     public async getComponents(page?: number, size?: number): Promise<IComponentResponse[]> {

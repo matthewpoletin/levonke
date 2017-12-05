@@ -41,7 +41,8 @@ export default abstract class AbstractController {
             if (Object.keys(error).length === 0) {
                 request.error = "Unprocessed request";
             }
-            return res.json(error.statusCode, request);
+            res.json(error.statusCode, request);
+            return next();
         } else {
             return next(new errs.ServiceUnavailableError(message));
         }

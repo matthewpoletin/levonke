@@ -21,7 +21,7 @@ export default class TeamController extends AbstractController {
             res.json(teamResponses);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `TeamService { getTeams } error`);
+            TeamController.errorResponse(error, res, next, `TeamService { getTeams } error`);
         }
     }
 
@@ -32,7 +32,7 @@ export default class TeamController extends AbstractController {
             res.json(201, teamResponse);
             return next();
         }   catch (error) {
-            this.errorResponse(error, res, next, `TeamService { createTeam } error`);
+            TeamController.errorResponse(error, res, next, `TeamService { createTeam } error`);
         }
     }
 
@@ -43,7 +43,7 @@ export default class TeamController extends AbstractController {
             res.json(team);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `teamService { getTeam: teamId = ${ teamId }} error`);
+            TeamController.errorResponse(error, res, next, `teamService { getTeam: teamId = ${ teamId }} error`);
         }
     }
 
@@ -55,7 +55,7 @@ export default class TeamController extends AbstractController {
             res.json(teamResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `TeamService { updateTeam: teamId = ${teamId} } error`);
+            TeamController.errorResponse(error, res, next, `TeamService { updateTeam: teamId = ${teamId} } error`);
         }
     }
 
@@ -66,7 +66,7 @@ export default class TeamController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `teamService { deleteTeam: teamId = ${teamId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService { deleteTeam: teamId = ${teamId} } error`);
         }
     }
 
@@ -77,7 +77,7 @@ export default class TeamController extends AbstractController {
             res.json(userResponses);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `teamService{ getUsers: teamId = ${teamId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService{ getUsers: teamId = ${teamId} } error`);
         }
     }
 
@@ -89,7 +89,7 @@ export default class TeamController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `teamService{ addUser: teamId = ${teamId}; userId = ${userId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService{ addUser: teamId = ${teamId}; userId = ${userId} } error`);
         }
     }
 
@@ -101,7 +101,7 @@ export default class TeamController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `teamService{ removeUser: teamId = ${teamId}; userId = ${userId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService{ removeUser: teamId = ${teamId}; userId = ${userId} } error`);
         }
     }
 
@@ -112,7 +112,7 @@ export default class TeamController extends AbstractController {
             res.json(organizationResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `teamService { getOrganization: teamId = ${teamId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService { getOrganization: teamId = ${teamId} } error`);
         }
     }
 
@@ -124,7 +124,7 @@ export default class TeamController extends AbstractController {
             res.json(projectResponses);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `teamService { getProjects: teamId = ${teamId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService { getProjects: teamId = ${teamId} } error`);
         }
     }
 
@@ -132,13 +132,19 @@ export default class TeamController extends AbstractController {
         const teamId: number = parseInt(req.params.teamId, 10);
         const projectRequest: IProjectRequest = req.body;
         try {
-            await TeamService.getTeam(teamId);
             let projectResponse = await ProjectService.createProject(projectRequest);
-            projectResponse = await ProjectService.setTeam(projectResponse.id, teamId);
-            res.json(201, projectResponse);
-            return next();
+            try {
+                await TeamService.getTeam(teamId);
+                projectResponse = await ProjectService.setTeam(projectResponse.id, teamId);
+                res.json(201, projectResponse);
+                return next();
+            } catch (error) {
+                await ProjectService.deleteProject(projectResponse.id);
+                res.send(503);
+                return next();
+            }
         } catch (error) {
-            this.errorResponse(error, res, next, `teamService { createProject: teamId = ${teamId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService { createProject: teamId = ${teamId} } error`);
         }
     }
 
@@ -151,7 +157,7 @@ export default class TeamController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `teamService { addProject: teamId = ${teamId}; projectId = ${projectId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService { addProject: teamId = ${teamId}; projectId = ${projectId} } error`);
         }
     }
 

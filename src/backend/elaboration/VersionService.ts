@@ -13,9 +13,18 @@ import getOptions from "./../../Options";
 
 import config from "../../../IConfig";
 
+import * as queue from "../../queue/queue";
+import * as queueRepository from "../../queue/repository";
+
 const elaborationServiceURL = config.Services.Elaboration.url + config.Services.Elaboration.port + config.Services.Elaboration.base;
 
 class VersionService implements IVersionService {
+
+    public queueCounter = 0;
+
+    constructor() {
+        queue.activate("addComponent");
+    }
 
     public async getVersions(page: number, size: number): Promise<IVersionResponse[]> {
         const options = getOptions(elaborationServiceURL, `/versions`, {page, size});
@@ -53,8 +62,20 @@ class VersionService implements IVersionService {
     }
 
     public async addComponent(versionId: number, componentRequest: IComponentResponse): Promise<void> {
+        this.queueCounter++;
         const options = getOptions(elaborationServiceURL, `/versions/${versionId}/components`, null, componentRequest);
-        return rp.post(options);
+        try {
+            const response = await rp.post(options);
+            console.log("BackendResponse: " + JSON.stringify(response));
+            return response;
+        } catch (error) {
+            console.log("BackendNoResponse");
+            if (!error.statusCode || error.statusCode.toString()[0] === "5") {
+                await queueRepository.pushBack(options, "addComponent");
+            } else {
+                return error.statusCode;
+            }
+        }
     }
 
     public async removeComponent(versionId: number, componentRequest: IComponentResponse): Promise<void> {

@@ -22,7 +22,7 @@ export default class VersionController extends AbstractController {
             res.json(versionResponses);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { getVersions } error`);
+            VersionController.errorResponse(error, res, next, `VersionService { getVersions } error`);
         }
     }
 
@@ -33,7 +33,7 @@ export default class VersionController extends AbstractController {
             res.json(201, versionResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { createVersion } error`);
+            VersionController.errorResponse(error, res, next, `VersionService { createVersion } error`);
         }
     }
 
@@ -44,7 +44,7 @@ export default class VersionController extends AbstractController {
             res.json(versionResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { getVersion: versionId = ${versionId}} error`);
+            VersionController.errorResponse(error, res, next, `VersionService { getVersion: versionId = ${versionId}} error`);
         }
     }
 
@@ -56,7 +56,7 @@ export default class VersionController extends AbstractController {
             res.json(versionResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { updateVersion: versionId = ${versionId} } error`);
+            VersionController.errorResponse(error, res, next, `VersionService { updateVersion: versionId = ${versionId} } error`);
         }
     }
 
@@ -67,7 +67,7 @@ export default class VersionController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { deleteVersion: versionId = ${versionId} } error`);
+            VersionController.errorResponse(error, res, next, `VersionService { deleteVersion: versionId = ${versionId} } error`);
         }
     }
 
@@ -78,7 +78,7 @@ export default class VersionController extends AbstractController {
             res.json(projectResponse);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { deleteVersion: versionId = ${versionId} } error`);
+            VersionController.errorResponse(error, res, next, `VersionService { deleteVersion: versionId = ${versionId} } error`);
         }
     }
 
@@ -86,14 +86,13 @@ export default class VersionController extends AbstractController {
         const versionId: number = parseInt(req.params.versionId, 10);
         const componentRequest: IComponentRequest = req.body;
         try {
-            await VersionService.getVersion(versionId);
             const componentResponse: IComponentResponse = await ComponentService.createComponent(componentRequest);
-            await VersionService.addComponent(versionId, componentResponse);
-            res.send(201);
-            return next();
+            await VersionService.addComponent(versionId, { uuid: componentResponse.uuid });
+            res.json(201, componentResponse);
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { createComponent: versionId = ${versionId} } error`);
+            VersionController.errorResponse(error, res, next, `VersionService { createComponent: versionId = ${versionId} } error`);
         }
+        return next();
     }
 
     public static async getComponents(req: restify.Request, res: restify.Response, next: restify.Next) {
@@ -101,15 +100,20 @@ export default class VersionController extends AbstractController {
         const componentResponsePromises = []; // -> массив Promise
         try {
             const componentUUIDResponses: IComponentResponse[] = await VersionService.getComponents(versionId);
-            componentUUIDResponses.forEach((element) => {
-                const uuid = element.uuid;
-                componentResponsePromises.push(ComponentService.getComponentByUUID(uuid));
-            });
-            const componentResponses = await Promise.all(componentResponsePromises);
-            res.json(componentResponses);
+            try {
+                componentUUIDResponses.forEach((element) => {
+                    const uuid = element.uuid;
+                    componentResponsePromises.push(ComponentService.getComponentByUUID(uuid));
+                });
+                const componentResponses = await Promise.all(componentResponsePromises);
+                res.json(componentResponses);
+            } catch (error) {
+                // VersionController.errorResponse(error, res, next, `VersionService { getComponents: versionId = ${versionId} } error`);
+            }
+            res.json(componentUUIDResponses);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { getComponents: versionId = ${versionId} } error`);
+            VersionController.errorResponse(error, res, next, `VersionService { getComponents: versionId = ${versionId} } error`);
         }
     }
 
@@ -117,12 +121,13 @@ export default class VersionController extends AbstractController {
         const versionId: number = parseInt(req.params.versionId, 10);
         const componentId: number = parseInt(req.params.componentId, 10);
         try {
+            const versionResponse = await VersionService.getVersion(versionId);
             const componentRequest = await ComponentService.getComponent(componentId);
             await VersionService.addComponent(versionId, componentRequest);
             res.send(201);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { addComponent: versionId = ${versionId}; componentId = ${componentId} } error`);
+            VersionController.errorResponse(error, res, next, `VersionService { addComponent: versionId = ${versionId}; componentId = ${componentId} } error`);
         }
     }
 
@@ -135,7 +140,7 @@ export default class VersionController extends AbstractController {
             res.send(201);
             return next();
         } catch (error) {
-            this.errorResponse(error, res, next, `VersionService { removeComponent: versionId = ${versionId}; componentId = ${componentId} } error`);
+            VersionController.errorResponse(error, res, next, `VersionService { removeComponent: versionId = ${versionId}; componentId = ${componentId} } error`);
         }
     }
 }

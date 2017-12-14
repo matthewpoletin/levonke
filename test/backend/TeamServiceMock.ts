@@ -18,21 +18,21 @@ TeamServiceMock.setup((service) => service.createTeam(TypeMoq.It.isAny()))
         id: Math.ceil(Math.random() * 100),
     }));
 
-TeamServiceMock.setup((service) => service.getTeam(TypeMoq.It.isAny()))
+TeamServiceMock.setup((service) => service.getTeamById(TypeMoq.It.isAny()))
     .returns(async (id: number) => ({
         id,
         name: rand.randomStringAlpha(8),
         organizationId: rand.generateId(),
     }));
 
-TeamServiceMock.setup((service) => service.updateTeam(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
+TeamServiceMock.setup((service) => service.updateTeamById(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
     .returns(async (id: number, team: ITeamRequest) => ({
         id,
         name: rand.randomStringAlpha(8),
         organizationId: rand.generateId(),
     }));
 
-TeamServiceMock.setup((service) => service.deleteTeam(TypeMoq.It.isAny()))
+TeamServiceMock.setup((service) => service.deleteTeamById(TypeMoq.It.isAny()))
     .returns(async (id: number) => undefined);
 
 export default TeamServiceMock;

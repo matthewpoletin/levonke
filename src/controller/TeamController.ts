@@ -5,11 +5,15 @@ import * as restify from "restify";
 import AbstractController from "./AbstractController";
 
 import TeamService from "../backend/community/TeamService";
+import UserService from "../backend/community/UserService";
 import ProjectService from "../backend/elaboration/ProjectService";
 
+import IOrganizationResponse from "../backend/community/interface/IOrganizationResponse";
 import ITeamRequest from "../backend/community/interface/ITeamRequest";
-import IUserResponse from "../backend/community/interface/IUserResponse";
+import ITeamResponse from "../backend/community/interface/ITeamResponse";
 import IProjectRequest from "../backend/elaboration/interface/IProjectRequest";
+import IProjectResponse from "../backend/elaboration/interface/IProjectResponse";
+import IUserResponse from "../backend/community/interface/IUserResponse";
 
 export default class TeamController extends AbstractController {
 
@@ -28,7 +32,7 @@ export default class TeamController extends AbstractController {
     public static async createTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
         const teamRequest: ITeamRequest = req.body;
         try {
-            const teamResponse = await TeamService.createTeam(teamRequest);
+            const teamResponse: ITeamResponse = await TeamService.createTeam(teamRequest);
             res.json(201, teamResponse);
             return next();
         }   catch (error) {
@@ -36,45 +40,61 @@ export default class TeamController extends AbstractController {
         }
     }
 
-    public static async getTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async getTeamById(req: restify.Request, res: restify.Response, next: restify.Next) {
         const teamId: number = parseInt(req.params.teamId, 10);
         try {
-            const team = await TeamService.getTeam(teamId);
-            res.json(team);
-            return next();
-        } catch (error) {
-            TeamController.errorResponse(error, res, next, `teamService { getTeam: teamId = ${ teamId }} error`);
-        }
-    }
-
-    public static async updateTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const teamId: number = parseInt(req.params.teamId, 10);
-        const teamRequest = req.body;
-        try {
-            const teamResponse = await TeamService.updateTeam(teamId, teamRequest);
+            const teamResponse: ITeamResponse = await TeamService.getTeamById(teamId);
             res.json(teamResponse);
             return next();
         } catch (error) {
-            TeamController.errorResponse(error, res, next, `TeamService { updateTeam: teamId = ${teamId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService { getTeamById: teamId = ${ teamId }} error`);
         }
     }
 
-    public static async deleteTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async getTeamByName(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const teamName: string = req.params.teamName;
+        try {
+            const teamResponse: ITeamResponse = await TeamService.getTeamByName(teamName);
+            res.json(teamResponse);
+            return next();
+        } catch (error) {
+            TeamController.errorResponse(error, res, next, `teamService { getTeamByName: teamId = ${ teamName }} error`);
+        }
+    }
+
+    public static async updateTeamById(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const teamId: number = parseInt(req.params.teamId, 10);
+        const teamRequest = req.body;
+        try {
+            const teamResponse: ITeamResponse = await TeamService.updateTeamById(teamId, teamRequest);
+            res.json(teamResponse);
+            return next();
+        } catch (error) {
+            TeamController.errorResponse(error, res, next, `TeamService { updateTeamById: teamId = ${teamId} } error`);
+        }
+    }
+
+    public static async deleteTeamById(req: restify.Request, res: restify.Response, next: restify.Next) {
         const teamId: number = parseInt(req.params.teamId, 10);
         try {
-            await TeamService.deleteTeam(teamId);
+            await TeamService.deleteTeamById(teamId);
             res.send(204);
             return next();
         } catch (error) {
-            TeamController.errorResponse(error, res, next, `teamService { deleteTeam: teamId = ${teamId} } error`);
+            TeamController.errorResponse(error, res, next, `teamService { deleteTeamById: teamId = ${teamId} } error`);
         }
     }
 
     public static async getUsers(req: restify.Request, res: restify.Response, next: restify.Next) {
         const teamId: number = parseInt(req.params.teamId, 10);
         try {
-            const userResponses: IUserResponse[] = await TeamService.getUsers(teamId);
-            res.json(userResponses);
+            const userIdResponses: number[] = await TeamService.getUsers(teamId);
+            const userResponsePromises = [];
+            userIdResponses.forEach((userId) => {
+                userResponsePromises.push(UserService.getUserById(userId));
+            });
+            const usersResponse: IUserResponse[] = await Promise.all(userResponsePromises);
+            res.json(usersResponse);
             return next();
         } catch (error) {
             TeamController.errorResponse(error, res, next, `teamService{ getUsers: teamId = ${teamId} } error`);
@@ -108,7 +128,7 @@ export default class TeamController extends AbstractController {
     public static async getOrganization(req: restify.Request, res: restify.Response, next: restify.Next) {
         const teamId: number = parseInt(req.params.teamId, 10);
         try {
-            const organizationResponse = await TeamService.getOrganization(teamId);
+            const organizationResponse: IOrganizationResponse = await TeamService.getOrganization(teamId);
             res.json(organizationResponse);
             return next();
         } catch (error) {
@@ -119,7 +139,7 @@ export default class TeamController extends AbstractController {
     public static async getProjects(req: restify.Request, res: restify.Response, next: restify.Next) {
         const teamId: number = parseInt(req.params.teamId, 10);
         try {
-            await TeamService.getTeam(teamId);
+            await TeamService.getTeamById(teamId);
             const projectResponses = await TeamService.getProjects(teamId);
             res.json(projectResponses);
             return next();
@@ -132,9 +152,9 @@ export default class TeamController extends AbstractController {
         const teamId: number = parseInt(req.params.teamId, 10);
         const projectRequest: IProjectRequest = req.body;
         try {
-            let projectResponse = await ProjectService.createProject(projectRequest);
+            let projectResponse: IProjectResponse = await ProjectService.createProject(projectRequest);
             try {
-                await TeamService.getTeam(teamId);
+                await TeamService.getTeamById(teamId);
                 projectResponse = await ProjectService.setTeam(projectResponse.id, teamId);
                 res.json(201, projectResponse);
                 return next();
@@ -152,7 +172,7 @@ export default class TeamController extends AbstractController {
         const teamId: number = parseInt(req.params.teamId, 10);
         const projectId: number = parseInt(req.params.projectId, 10);
         try {
-            await TeamService.getTeam(teamId);
+            await TeamService.getTeamById(teamId);
             await ProjectService.setTeam(projectId, teamId);
             res.send(201);
             return next();
@@ -160,5 +180,4 @@ export default class TeamController extends AbstractController {
             TeamController.errorResponse(error, res, next, `teamService { addProject: teamId = ${teamId}; projectId = ${projectId} } error`);
         }
     }
-
 }

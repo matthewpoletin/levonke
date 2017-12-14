@@ -52,28 +52,28 @@ describe("OrganizationController test", () => {
     });
 
 
-    it("getOrganization", async () => {
+    it("getOrganizationById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await organizationController.getOrganization(req, res, next);
+        await organizationController.getOrganizationById(req, res, next);
 
-        OrganizationServiceMock.verify((service) => service.getOrganization(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        OrganizationServiceMock.verify((service) => service.getOrganizationById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateOrganizationResponse(res._object);
     });
 
-    it("updateOrganization", async () => {
+    it("updateOrganizationById", async () => {
         const req = new RequestMock().setParams({id: 1}).setBody({});
         const res = new ResponseMock();
-        await organizationController.updateOrganization(req, res, next);
+        await organizationController.updateOrganizationById(req, res, next);
 
         OrganizationServiceMock.verify((service) => service.updateOrganization(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateOrganizationResponse(res._object);
     });
 
-    it("deleteOrganization", async () => {
+    it("deleteOrganizationById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await organizationController.deleteOrganization(req, res, next);
+        await organizationController.deleteOrganizationById(req, res, next);
 
         OrganizationServiceMock.verify((service) => service.deleteOrganization(TypeMoq.It.isAny()), TypeMoq.Times.once());
         assert.strictEqual(res._code, 204, "HttpResponseCode 204");

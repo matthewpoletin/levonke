@@ -11,6 +11,7 @@ import IVersionRequest from "../backend/elaboration/interface/IVersionRequest";
 import IVersionResponse from "../backend/elaboration/interface/IVersionResponse";
 import IComponentRequest from "../backend/supply/interface/IComponentRequest";
 import IComponentResponse from "../backend/supply/interface/IComponentResponse";
+import IProjectResponse from "../backend/elaboration/interface/IProjectResponse";
 
 export default class VersionController extends AbstractController {
 
@@ -29,7 +30,7 @@ export default class VersionController extends AbstractController {
     public static async createVersion(req: restify.Request, res: restify.Response, next: restify.Next) {
         const versionRequest: IVersionRequest = req.body;
         try {
-            const versionResponse = await VersionService.createVersion(versionRequest);
+            const versionResponse: IVersionResponse = await VersionService.createVersion(versionRequest);
             res.json(201, versionResponse);
             return next();
         } catch (error) {
@@ -52,7 +53,7 @@ export default class VersionController extends AbstractController {
         const versionId = parseInt(req.params.versionId, 10);
         const versionRequest = req.body;
         try {
-            const versionResponse = await VersionService.updateVersion(versionId, versionRequest);
+            const versionResponse: IVersionResponse = await VersionService.updateVersion(versionId, versionRequest);
             res.json(versionResponse);
             return next();
         } catch (error) {
@@ -74,7 +75,7 @@ export default class VersionController extends AbstractController {
     public static async getProject(req: restify.Request, res: restify.Response, next: restify.Next) {
         const versionId: number = parseInt(req.params.versionId, 10);
         try {
-            const projectResponse = await VersionService.getProject(versionId);
+            const projectResponse: IProjectResponse = await VersionService.getProject(versionId);
             res.json(projectResponse);
             return next();
         } catch (error) {
@@ -105,7 +106,7 @@ export default class VersionController extends AbstractController {
                     const uuid = element.uuid;
                     componentResponsePromises.push(ComponentService.getComponentByUUID(uuid));
                 });
-                const componentResponses = await Promise.all(componentResponsePromises);
+                const componentResponses: IComponentResponse[] = await Promise.all(componentResponsePromises);
                 res.json(componentResponses);
             } catch (error) {
                 // VersionController.errorResponse(error, res, next, `VersionService { getComponents: versionId = ${versionId} } error`);
@@ -121,8 +122,8 @@ export default class VersionController extends AbstractController {
         const versionId: number = parseInt(req.params.versionId, 10);
         const componentId: number = parseInt(req.params.componentId, 10);
         try {
-            const versionResponse = await VersionService.getVersion(versionId);
-            const componentRequest = await ComponentService.getComponent(componentId);
+            await VersionService.getVersion(versionId);
+            const componentRequest: IComponentResponse = await ComponentService.getComponent(componentId);
             await VersionService.addComponent(versionId, componentRequest);
             res.send(201);
             return next();
@@ -135,7 +136,7 @@ export default class VersionController extends AbstractController {
         const versionId: number = parseInt(req.params.versionId, 10);
         const componentId: number = parseInt(req.params.componentId, 10);
         try {
-            const componentRequest = await ComponentService.getComponent(componentId);
+            const componentRequest: IComponentResponse = await ComponentService.getComponent(componentId);
             await VersionService.removeComponent(versionId, componentRequest);
             res.send(201);
             return next();

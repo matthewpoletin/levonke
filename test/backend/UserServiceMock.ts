@@ -18,7 +18,7 @@ UserServiceMock.setup((service) => service.createUser(TypeMoq.It.isAny()))
         id: Math.ceil(Math.random() * 100),
     }));
 
-UserServiceMock.setup((service) => service.getUser(TypeMoq.It.isAny()))
+UserServiceMock.setup((service) => service.getUserById(TypeMoq.It.isAny()))
     .returns(async (id: number) => ({
         id,
         username: rand.randomStringAlpha(8),
@@ -31,7 +31,7 @@ UserServiceMock.setup((service) => service.getUser(TypeMoq.It.isAny()))
         // client: Math.ceil(Math.random() * 100),
     }));
 
-UserServiceMock.setup((service) => service.updateUser(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
+UserServiceMock.setup((service) => service.updateUserById(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
     .returns(async (id: number, user: IUserRequest) => ({
         id,
         username: rand.randomStringAlpha(8),
@@ -44,7 +44,7 @@ UserServiceMock.setup((service) => service.updateUser(TypeMoq.It.isAny(), TypeMo
         // client: Math.ceil(Math.random() * 100),
     }));
 
-UserServiceMock.setup((service) => service.deleteUser(TypeMoq.It.isAny()))
+UserServiceMock.setup((service) => service.deleteUserById(TypeMoq.It.isAny()))
     .returns(async (id: number) => undefined);
 
 export default UserServiceMock;

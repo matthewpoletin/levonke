@@ -18,7 +18,7 @@ OrganizationServiceMock.setup((service) => service.createOrganization(TypeMoq.It
         id: Math.ceil(Math.random() * 100),
     }));
 
-OrganizationServiceMock.setup((service) => service.getOrganization(TypeMoq.It.isAny()))
+OrganizationServiceMock.setup((service) => service.getOrganizationById(TypeMoq.It.isAny()))
     .returns(async (id: number) => ({
         id,
         name: rand.randomStringAlpha(8),

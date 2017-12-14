@@ -49,30 +49,30 @@ describe("TeamController test", () => {
     });
 
 
-    it("getTeam", async () => {
+    it("getTeamById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await teamController.getTeam(req, res, next);
+        await teamController.getTeamById(req, res, next);
 
-        TeamServiceMock.verify((service) => service.getTeam(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        TeamServiceMock.verify((service) => service.getTeamById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateTeamResponse(res._object);
     });
 
-    it("updateTeam", async () => {
+    it("updateTeamById", async () => {
         const req = new RequestMock().setParams({id: 1}).setBody({});
         const res = new ResponseMock();
-        await teamController.updateTeam(req, res, next);
+        await teamController.updateTeamById(req, res, next);
 
-        TeamServiceMock.verify((service) => service.updateTeam(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
+        TeamServiceMock.verify((service) => service.updateTeamById(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateTeamResponse(res._object);
     });
 
-    it("deleteTeam", async () => {
+    it("deleteTeamById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await teamController.deleteTeam(req, res, next);
+        await teamController.deleteTeamById(req, res, next);
 
-        TeamServiceMock.verify((service) => service.deleteTeam(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        TeamServiceMock.verify((service) => service.deleteTeamById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         assert.strictEqual(res._code, 204, "HttpResponseCode 204");
     });
 

@@ -33,18 +33,30 @@ export default class OrganizationController extends AbstractController {
         }
     }
 
-    public static async getOrganization(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async getOrganizationById(req: restify.Request, res: restify.Response, next: restify.Next) {
         const organizationId: number = parseInt(req.params.organizationId, 10);
         try {
-            const organizationResponse = await OrganizationService.getOrganization(organizationId);
+            const organizationResponse = await OrganizationService.getOrganizationById(organizationId);
             res.json(organizationResponse);
             return next();
         } catch (error) {
-            OrganizationController.errorResponse(error, res, next, `OrganizationService { getOrganization: organizationId = ${organizationId}} error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { getOrganizationById: organizationId = ${organizationId}} error`);
         }
     }
 
-    public static async updateOrganization(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async getOrganizationByName(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const organizationName: string = req.params.organizationName;
+        try {
+            const organizationResponse = await OrganizationService.getOrganizationByName(organizationName);
+            res.json(organizationResponse);
+            return next();
+        } catch (error) {
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { getOrganizationByName: organizationName = ${organizationName}} error`);
+        }
+
+    }
+
+    public static async updateOrganizationById(req: restify.Request, res: restify.Response, next: restify.Next) {
         const organizationId: number = parseInt(req.params.organizationId, 10);
         const organizationRequest = req.body;
         try {
@@ -52,18 +64,18 @@ export default class OrganizationController extends AbstractController {
             res.json(organizationResponse);
             return next();
         } catch (error) {
-            OrganizationController.errorResponse(error, res, next, `OrganizationService { updateOrganization: organizationId = ${organizationId} } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { updateOrganizationById: organizationId = ${organizationId} } error`);
         }
     }
 
-    public static async deleteOrganization(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async deleteOrganizationById(req: restify.Request, res: restify.Response, next: restify.Next) {
         const organizationId: number = parseInt(req.params.organizationId, 10);
         try {
             await OrganizationService.deleteOrganization(organizationId);
             res.send(204);
             return next();
         } catch (error) {
-            OrganizationController.errorResponse(error, res, next, `OrganizationService { deleteOrganization: organizationId = ${organizationId} } error`);
+            OrganizationController.errorResponse(error, res, next, `OrganizationService { deleteOrganizationById: organizationId = ${organizationId} } error`);
         }
     }
 

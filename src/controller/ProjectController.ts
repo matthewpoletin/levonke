@@ -95,7 +95,7 @@ export default class ProjectController extends AbstractController {
         const projectId: number = parseInt(req.params.projectId, 10);
         try {
             const teamId = (await ProjectService.getProject(projectId)).id;
-            const teamResponse = await TeamService.getTeam(teamId);
+            const teamResponse = await TeamService.getTeamById(teamId);
             res.json(teamResponse);
             return next();
         } catch (error) {

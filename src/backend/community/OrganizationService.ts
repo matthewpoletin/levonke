@@ -27,8 +27,13 @@ class OrganizationService implements IOrganizationService {
         return rp.post(options);
     }
 
-    public async getOrganization(organizationId: number): Promise<IOrganizationResponse> {
+    public async getOrganizationById(organizationId: number): Promise<IOrganizationResponse> {
         const options = getOptions(communityServiceURL, `/organizations/${organizationId}`);
+        return rp.get(options);
+    }
+
+    public async getOrganizationByName(organizationId: string): Promise<IOrganizationResponse> {
+        const options = getOptions(communityServiceURL, `/organizations/name/${organizationId}`);
         return rp.get(options);
     }
 

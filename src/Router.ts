@@ -16,6 +16,8 @@ export default function Router(server: restify.Server) {
     server.get("/users", UserController.getUsers);
     server.post("/users", UserController.createUser);
     server.get("/users/:userId", UserController.getUser);
+    server.get("/users/username/:username", UserController.getUserByUsername);
+    server.get("/users/email/:email", UserController.getUserByEmail);
     server.patch("/users/:userId", UserController.updateUser);
     server.del("/users/:userId", UserController.deleteUser);
 
@@ -24,9 +26,10 @@ export default function Router(server: restify.Server) {
     // ORGANIZATIONS
     server.get("/organizations", OrganizationController.getOrganizations);
     server.post("/organizations", OrganizationController.createOrganization);
-    server.get("/organizations/:organizationId", OrganizationController.getOrganization);
-    server.patch("/organizations/:organizationId", OrganizationController.updateOrganization);
-    server.del("/organizations/:organizationId", OrganizationController.deleteOrganization);
+    server.get("/organizations/:organizationId", OrganizationController.getOrganizationById);
+    server.get("/organizations/name/:organizationName", OrganizationController.getOrganizationByName);
+    server.patch("/organizations/:organizationId", OrganizationController.updateOrganizationById);
+    server.del("/organizations/:organizationId", OrganizationController.deleteOrganizationById);
 
     server.post("/organizations/:organizationId/owner/:userId", OrganizationController.setOwner);
     server.get("/organizations/:organizationId/owner", OrganizationController.getOwner);
@@ -38,9 +41,10 @@ export default function Router(server: restify.Server) {
     // TEAMS
     server.get("/teams", TeamController.getTeams);
     server.post("/teams", TeamController.createTeam);
-    server.get("/teams/:teamId", TeamController.getTeam);
-    server.patch("/teams/:teamId", TeamController.updateTeam);
-    server.del("/teams/:teamId", TeamController.deleteTeam);
+    server.get("/teams/:teamId", TeamController.getTeamById);
+    server.get("/teams/name/:teamName", TeamController.getTeamByName);
+    server.patch("/teams/:teamId", TeamController.updateTeamById);
+    server.del("/teams/:teamId", TeamController.deleteTeamById);
 
     server.get("/teams/:teamId/users", TeamController.getUsers);
     server.post("/teams/:teamId/users/:userId", TeamController.addUser);

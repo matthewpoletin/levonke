@@ -6,7 +6,6 @@ import IProjectResponse from "../elaboration/interface/IProjectResponse";
 import IOrganizationResponse from "./interface/IOrganizationResponse";
 import ITeamRequest from "./interface/ITeamRequest";
 import ITeamResponse from "./interface/ITeamResponse";
-import IUserResponse from "./interface/IUserResponse";
 
 import ITeamService from "./ITeamService";
 
@@ -29,17 +28,22 @@ class TeamService implements ITeamService {
         return rp.post(options);
     }
 
-    public async getTeam(teamId: number): Promise<ITeamResponse> {
+    public async getTeamById(teamId: number): Promise<ITeamResponse> {
         const options = getOptions(communityServiceURL, `/teams/${teamId}`);
         return rp.get(options);
     }
 
-    public async updateTeam(teamId: number, teamRequest: ITeamRequest) {
+    public async getTeamByName(teamName: string): Promise<ITeamResponse> {
+        const options = getOptions(communityServiceURL, `/teams/name/${teamName}`);
+        return rp.get(options);
+    }
+
+    public async updateTeamById(teamId: number, teamRequest: ITeamRequest) {
         const options = getOptions(communityServiceURL, `/teams/${teamId}`, null, teamRequest);
         return rp.patch(options);
     }
 
-    public async deleteTeam(teamId: number): Promise<void> {
+    public async deleteTeamById(teamId: number): Promise<void> {
         const option = getOptions(communityServiceURL, `/teams/${teamId}`);
         return rp.delete(option);
     }
@@ -49,8 +53,8 @@ class TeamService implements ITeamService {
         return rp.post(options);
     }
 
-    public async getUsers(teamId: number, page?: number, size?: number): Promise<IUserResponse[]> {
-        const options = getOptions(communityServiceURL, `/teams/teamId}/users`);
+    public async getUsers(teamId: number, page?: number, size?: number): Promise<number[]> {
+        const options = getOptions(communityServiceURL, `/teams/${teamId}/users`);
         return rp.get(options);
     }
 

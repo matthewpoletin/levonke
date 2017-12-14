@@ -16,8 +16,8 @@ const communityServiceURL = config.Services.Community.url + config.Services.Comm
 
 class UserService implements IUserService {
 
-    public async getUsers(page?: number, size?: number): Promise<IUserResponse[]> {
-        const options = getOptions(communityServiceURL, `/users`, {page, size});
+    public async getUsers(page?: number, size?: number, username?): Promise<IUserResponse[]> {
+        const options = getOptions(communityServiceURL, `/users`, {page, size, username});
         return rp.get(options);
     }
 
@@ -26,17 +26,27 @@ class UserService implements IUserService {
         return rp.post(options);
     }
 
-    public async getUser(userId: number): Promise<IUserResponse> {
+    public async getUserById(userId: number): Promise<IUserResponse> {
         const options = getOptions(communityServiceURL, `/users/${userId}`);
         return rp.get(options);
     }
 
-    public async updateUser(userId: number, userRequest: IUserRequest): Promise<IUserResponse> {
+    public async getUserByUsername(username: string): Promise<IUserResponse> {
+        const options = getOptions(communityServiceURL, `/users/username/${username}`);
+        return rp.get(options);
+    }
+
+    public async getUserByEmail(email: string): Promise<IUserResponse> {
+        const options = getOptions(communityServiceURL, `/users/email/${email}`);
+        return rp.get(options);
+    }
+
+    public async updateUserById(userId: number, userRequest: IUserRequest): Promise<IUserResponse> {
         const options = getOptions(communityServiceURL, `/users/${userId}`, null, userRequest);
         return rp.patch(options);
     }
 
-    public async deleteUser(userId: number): Promise<void> {
+    public async deleteUserById(userId: number): Promise<void> {
         const options = getOptions(communityServiceURL, `/users/${userId}`);
         return rp.delete(options);
     }

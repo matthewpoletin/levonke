@@ -8,7 +8,8 @@ import IUserResponse from "./interface/IUserResponse";
 export default interface IOrganizationService {
     getOrganizations(page: number, size: number): Promise<IOrganizationResponse[]>;
     createOrganization(organizationRequest: IOrganizationRequest): Promise<{ id: number; }>;
-    getOrganization(organizationId: number): Promise<IOrganizationResponse>;
+    getOrganizationById(organizationId: number): Promise<IOrganizationResponse>;
+    getOrganizationByName(organizationId: string): Promise<IOrganizationResponse>;
     updateOrganization(organizationId: number, organizationRequest: IOrganizationRequest): Promise<IOrganizationResponse>;
     deleteOrganization(organizationId: number): Promise<void>;
 

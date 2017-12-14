@@ -54,30 +54,30 @@ describe("UserController test", () => {
     });
 
 
-    it("getUser", async () => {
+    it("getUserById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await userController.getUser(req, res, next);
+        await userController.getUserById(req, res, next);
 
-        UserServiceMock.verify((service) => service.getUser(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        UserServiceMock.verify((service) => service.getUserById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateUserResponse(res._object);
     });
 
-    it("updateUser", async () => {
+    it("updateUserById", async () => {
         const req = new RequestMock().setParams({id: 1}).setBody({});
         const res = new ResponseMock();
-        await userController.updateUser(req, res, next);
+        await userController.updateUserById(req, res, next);
 
-        UserServiceMock.verify((service) => service.updateUser(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
+        UserServiceMock.verify((service) => service.updateUserById(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateUserResponse(res._object);
     });
 
-    it("deleteUser", async () => {
+    it("deleteUserById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await userController.deleteUser(req, res, next);
+        await userController.deleteUserById(req, res, next);
 
-        UserServiceMock.verify((service) => service.deleteUser(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        UserServiceMock.verify((service) => service.deleteUserById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         assert.strictEqual(res._code, 204, "HttpResponseCode 204");
     });
 

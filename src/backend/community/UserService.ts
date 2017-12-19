@@ -5,6 +5,7 @@ import * as rp from "request-promise";
 import ITeamResponse from "./interface/ITeamResponse";
 import IUserRequest from "./interface/IUserRequest";
 import IUserResponse from "./interface/IUserResponse";
+import IUserPaginated from "./interface/IUserResponse";
 
 import IUserService from "./IUserService";
 
@@ -16,7 +17,7 @@ const communityServiceURL = config.Services.Community.url + config.Services.Comm
 
 class UserService implements IUserService {
 
-    public async getUsers(page?: number, size?: number, username?): Promise<IUserResponse[]> {
+    public async getUsers(page?: number, size?: number, username?): Promise<IUserPaginated[]> {
         const options = getOptions(communityServiceURL, `/users`, {page, size, username});
         return rp.get(options);
     }

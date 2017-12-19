@@ -66,7 +66,7 @@ describe("OrganizationController test", () => {
         const res = new ResponseMock();
         await organizationController.updateOrganizationById(req, res, next);
 
-        OrganizationServiceMock.verify((service) => service.updateOrganization(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
+        OrganizationServiceMock.verify((service) => service.updateOrganizationById(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateOrganizationResponse(res._object);
     });
 
@@ -75,7 +75,7 @@ describe("OrganizationController test", () => {
         const res = new ResponseMock();
         await organizationController.deleteOrganizationById(req, res, next);
 
-        OrganizationServiceMock.verify((service) => service.deleteOrganization(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        OrganizationServiceMock.verify((service) => service.deleteOrganizationById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         assert.strictEqual(res._code, 204, "HttpResponseCode 204");
     });
 

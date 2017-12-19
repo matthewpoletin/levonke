@@ -30,7 +30,7 @@ describe("ManufacturerController test", () => {
     it("getManufacturers", async () => {
         const req = new RequestMock().setBody({}).setQuery({page: "0", size: "25"});
         const res = new ResponseMock();
-        await manufacturerController.getManufacturers(req, res, next);
+        await manufacturerController.getManufacturers(req, res);
 
         ManufacturerServiceMock.verify((service) => service.getManufacturers(TypeMoq.It.isAny(), TypeMoq.It.isAny()), TypeMoq.Times.once());
         res._object && res._object.length ?
@@ -49,30 +49,30 @@ describe("ManufacturerController test", () => {
     });
 
 
-    it("getManufacturer", async () => {
+    it("getManufacturerById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await manufacturerController.getManufacturer(req, res, next);
+        await manufacturerController.getManufacturerById(req, res, next);
 
-        ManufacturerServiceMock.verify((service) => service.getManufacturer(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        ManufacturerServiceMock.verify((service) => service.getManufacturerById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateManufacturerResponse(res._object);
     });
 
-    it("updateManufacturer", async () => {
+    it("updateManufacturerById", async () => {
         const req = new RequestMock().setParams({id: 1}).setBody({});
         const res = new ResponseMock();
-        await manufacturerController.updateManufacturer(req, res, next);
+        await manufacturerController.updateManufacturerById(req, res, next);
 
-        ManufacturerServiceMock.verify((service) => service.updateManufacturer(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
+        ManufacturerServiceMock.verify((service) => service.updateManufacturerById(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateManufacturerResponse(res._object);
     });
 
-    it("deleteManufacturer", async () => {
+    it("deleteManufacturerById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await manufacturerController.deleteManufacturer(req, res, next);
+        await manufacturerController.deleteManufacturerById(req, res, next);
 
-        ManufacturerServiceMock.verify((service) => service.deleteManufacturer(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        ManufacturerServiceMock.verify((service) => service.deleteManufacturerById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         assert.strictEqual(res._code, 204, "HttpResponseCode 204");
     });
 

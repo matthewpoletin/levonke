@@ -1,11 +1,12 @@
 "use strict";
 
+import ITeamResponse from "./interface/ITeamResponse";
 import IUserRequest from "./interface/IUserRequest";
 import IUserResponse from "./interface/IUserResponse";
-import ITeamResponse from "./interface/ITeamResponse";
+import IUserPaginated from "./interface/IUserResponse";
 
 export default interface IUserService {
-    getUsers(page?: number, size?: number, query?: string): Promise<IUserResponse[]>;
+    getUsers(page?: number, size?: number, query?: string): Promise<IUserPaginated[]>;
     createUser(userRequest: IUserRequest): Promise<{ id: number; }>;
     getUserById(userId: number): Promise<IUserResponse>;
     getUserBy(params): Promise<IUserResponse>;

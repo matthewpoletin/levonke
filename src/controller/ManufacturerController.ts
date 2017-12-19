@@ -36,7 +36,7 @@ export default class ManufacturerController extends AbstractController {
     public static async getManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
         const manufacturerId: number = parseInt(req.params.manufacturerId, 10);
         try {
-            const manufacturerResponse = await ManufacturerService.getManufacturer(manufacturerId);
+            const manufacturerResponse = await ManufacturerService.getManufacturerById(manufacturerId);
             res.json(manufacturerResponse);
             return next();
         } catch (error) {
@@ -48,7 +48,7 @@ export default class ManufacturerController extends AbstractController {
         const manufacturerId: number = parseInt(req.params.manufacturerId, 10);
         const manufacturerRequest = req.body;
         try {
-            const manufacturerResponse = await ManufacturerService.updateManufacturer(manufacturerId, manufacturerRequest);
+            const manufacturerResponse = await ManufacturerService.updateManufacturerById(manufacturerId, manufacturerRequest);
             res.json(manufacturerResponse);
             return next();
         } catch (error) {
@@ -59,7 +59,7 @@ export default class ManufacturerController extends AbstractController {
     public static async deleteManufacturer(req: restify.Request, res: restify.Response, next: restify.Next) {
         const manufacturerId: number = parseInt(req.params.manufacturerId, 10);
         try {
-            await ManufacturerService.deleteManufacturer(manufacturerId);
+            await ManufacturerService.deleteManufacturerById(manufacturerId);
             res.send(204);
             return next();
         } catch (error) {

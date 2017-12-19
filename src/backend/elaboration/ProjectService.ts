@@ -4,6 +4,7 @@ import * as rp from "request-promise";
 
 import IProjectRequest from "./interface/IProjectRequest";
 import IProjectResponse from "./interface/IProjectResponse";
+import IProjectPaginated from "./interface/IProjectResponse";
 import IVersionResponse from "./interface/IVersionResponse";
 
 import IProjectService from "./IProjectService";
@@ -16,7 +17,7 @@ const elaborationServiceURL = config.Services.Elaboration.url + config.Services.
 
 class ProjectService implements IProjectService {
 
-    public async getProjects(page?: number, size?: number): Promise<IProjectResponse[]> {
+    public async getProjects(page?: number, size?: number): Promise<IProjectPaginated[]> {
         const options = getOptions(elaborationServiceURL, `/projects`, {page, size});
         return rp.get(options);
     }

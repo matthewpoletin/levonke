@@ -59,7 +59,7 @@ export default class OrganizationController extends AbstractController {
         const organizationId: number = parseInt(req.params.organizationId, 10);
         const organizationRequest = req.body;
         try {
-            const organizationResponse = await OrganizationService.updateOrganization(organizationId, organizationRequest);
+            const organizationResponse = await OrganizationService.updateOrganizationById(organizationId, organizationRequest);
             res.json(organizationResponse);
             return next();
         } catch (error) {
@@ -70,7 +70,7 @@ export default class OrganizationController extends AbstractController {
     public static async deleteOrganizationById(req: restify.Request, res: restify.Response, next: restify.Next) {
         const organizationId: number = parseInt(req.params.organizationId, 10);
         try {
-            await OrganizationService.deleteOrganization(organizationId);
+            await OrganizationService.deleteOrganizationById(organizationId);
             res.send(204);
             return next();
         } catch (error) {

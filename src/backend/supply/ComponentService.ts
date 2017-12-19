@@ -4,6 +4,7 @@ import * as rp from "request-promise";
 
 import IComponentRequest from "./interface/IComponentRequest";
 import IComponentResponse from "./interface/IComponentResponse";
+import IComponentPaginated from "./interface/IComponentResponse";
 
 import IComponentService from "./IComponentService";
 
@@ -15,7 +16,7 @@ const supplyServiceURL = config.Services.Supply.url + config.Services.Supply.por
 
 class ComponentService implements IComponentService {
 
-    public async getComponents(page?: number, size?: number): Promise<IComponentResponse[]> {
+    public async getComponents(page: number, size: number): Promise<IComponentPaginated[]> {
         const options = getOptions(supplyServiceURL, `/components`, {page, size});
         return rp.get(options);
     }

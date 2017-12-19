@@ -6,6 +6,7 @@ import IProjectResponse from "../elaboration/interface/IProjectResponse";
 import IOrganizationResponse from "./interface/IOrganizationResponse";
 import ITeamRequest from "./interface/ITeamRequest";
 import ITeamResponse from "./interface/ITeamResponse";
+import ITeamPaginated from "./interface/ITeamResponse";
 
 import ITeamService from "./ITeamService";
 
@@ -18,7 +19,7 @@ const elaborationServiceURL = config.Services.Elaboration.url + config.Services.
 
 class TeamService implements ITeamService {
 
-    public async getTeams(page?: number, size?: number): Promise<ITeamResponse[]> {
+    public async getTeams(page?: number, size?: number): Promise<ITeamPaginated[]> {
         const options = getOptions(communityServiceURL, `/teams`, {page, size});
         return rp.get(options);
     }

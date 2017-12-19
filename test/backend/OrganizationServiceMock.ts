@@ -28,7 +28,7 @@ OrganizationServiceMock.setup((service) => service.getOrganizationById(TypeMoq.I
         ownerId: rand.generateId(),
     }));
 
-OrganizationServiceMock.setup((service) => service.updateOrganization(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
+OrganizationServiceMock.setup((service) => service.updateOrganizationById(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
     .returns(async (id: number, organization: IOrganizationRequest) => ({
         id,
         name: rand.randomStringAlpha(8),
@@ -38,7 +38,7 @@ OrganizationServiceMock.setup((service) => service.updateOrganization(TypeMoq.It
         ownerId: rand.generateId(),
     }));
 
-OrganizationServiceMock.setup((service) => service.deleteOrganization(TypeMoq.It.isAny()))
+OrganizationServiceMock.setup((service) => service.deleteOrganizationById(TypeMoq.It.isAny()))
     .returns(async (id: number) => undefined);
 
 export default OrganizationServiceMock;

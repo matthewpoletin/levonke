@@ -2,10 +2,11 @@
 
 import IProjectRequest from "./interface/IProjectRequest";
 import IProjectResponse from "./interface/IProjectResponse";
+import IProjectPaginated from "./interface/IProjectResponse";
 import IVersionResponse from "./interface/IVersionResponse";
 
 export default interface IProjectService {
-    getProjects(page?: number, size?: number): Promise<IProjectResponse[]>;
+    getProjects(page?: number, size?: number): Promise<IProjectPaginated[]>;
     createProject(projectRequest: IProjectRequest): Promise<IProjectResponse>;
     getProject(projectId: number): Promise<IProjectResponse>;
     updateProject(projectId: number, projectRequest: IProjectRequest): Promise<IProjectResponse>;

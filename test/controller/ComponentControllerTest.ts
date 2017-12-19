@@ -31,7 +31,7 @@ describe("ComponentController test", () => {
     it("getComponents", async () => {
         const req = new RequestMock().setBody({}).setQuery({page: "0", size: "25"});
         const res = new ResponseMock();
-        await componentController.getComponents(req, res, next);
+        await componentController.getComponents(req, res);
 
         ComponentServiceMock.verify((service) => service.getComponents(TypeMoq.It.isAny(), TypeMoq.It.isAny()), TypeMoq.Times.once());
         res._object && res._object.length ?

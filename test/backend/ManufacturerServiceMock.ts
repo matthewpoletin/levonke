@@ -18,21 +18,21 @@ ManufacturerServiceMock.setup((service) => service.createManufacturer(TypeMoq.It
         id: Math.ceil(Math.random() * 100),
     }));
 
-ManufacturerServiceMock.setup((service) => service.getManufacturer(TypeMoq.It.isAny()))
+ManufacturerServiceMock.setup((service) => service.getManufacturerById(TypeMoq.It.isAny()))
     .returns(async (id: number) => ({
         id,
         name: rand.randomStringAlpha(8),
         website: rand.generateLink(),
     }));
 
-ManufacturerServiceMock.setup((service) => service.updateManufacturer(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
+ManufacturerServiceMock.setup((service) => service.updateManufacturerById(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
     .returns(async (id: number, manufacturer: IManufacturerRequest) => ({
         id,
         name: rand.randomStringAlpha(8),
         website: rand.generateLink(),
     }));
 
-ManufacturerServiceMock.setup((service) => service.deleteManufacturer(TypeMoq.It.isAny()))
+ManufacturerServiceMock.setup((service) => service.deleteManufacturerById(TypeMoq.It.isAny()))
     .returns(async (id: number) => undefined);
 
 export default ManufacturerServiceMock;

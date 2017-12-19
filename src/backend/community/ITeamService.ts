@@ -4,10 +4,10 @@ import IProjectResponse from "../elaboration/interface/IProjectResponse";
 import IOrganizationResponse from "./interface/IOrganizationResponse";
 import ITeamRequest from "./interface/ITeamRequest";
 import ITeamResponse from "./interface/ITeamResponse";
-import IUserResponse from "./interface/IUserResponse";
+import ITeamPaginated from "./interface/ITeamResponse";
 
 export default interface ITeamService {
-    getTeams(page?: number, size?: number): Promise<ITeamResponse[]>;
+    getTeams(page?: number, size?: number): Promise<ITeamPaginated[]>;
     createTeam(teamRequest: ITeamRequest): Promise<{ id: number; }>;
     getTeamById(id: number): Promise<ITeamResponse>;
     getTeamBy(params): Promise<ITeamResponse>;

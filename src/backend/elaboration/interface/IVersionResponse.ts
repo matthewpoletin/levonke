@@ -1,5 +1,7 @@
 "use strict";
 
+import IPaginated from "../../IPaginated";
+
 import IComponentResponse from "../../supply/interface/IComponentResponse";
 
 export default interface IVersionResponse {
@@ -7,4 +9,8 @@ export default interface IVersionResponse {
     major?: number;
     projectId?: number;
     components?: IComponentResponse[];
+}
+
+export interface IVersionPaginated extends IPaginated {
+    content: IVersionResponse[];
 }

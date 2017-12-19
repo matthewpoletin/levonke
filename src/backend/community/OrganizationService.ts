@@ -4,6 +4,7 @@ import * as rp from "request-promise";
 
 import IOrganizationRequest from "./interface/IOrganizationRequest";
 import IOrganizationResponse from "./interface/IOrganizationResponse";
+import IOrganizationPaginated from "./interface/IOrganizationResponse";
 import IUserResponse from "./interface/IUserResponse";
 
 import IOrganizationService from "./IOrganizationService";
@@ -17,7 +18,7 @@ const communityServiceURL = config.Services.Community.url + config.Services.Comm
 
 class OrganizationService implements IOrganizationService {
 
-    public async getOrganizations(page: number, size: number): Promise<IOrganizationResponse[]> {
+    public async getOrganizations(page: number, size: number): Promise<IOrganizationPaginated[]> {
         const options = getOptions(communityServiceURL, `/organizations`, {page, size});
         return rp.get(options);
     }
@@ -37,12 +38,12 @@ class OrganizationService implements IOrganizationService {
         return rp.get(options);
     }
 
-    public async updateOrganization(organizationId: number, organizationRequest: IOrganizationRequest): Promise<IOrganizationResponse> {
+    public async updateOrganizationById(organizationId: number, organizationRequest: IOrganizationRequest): Promise<IOrganizationResponse> {
         const options = getOptions(`/organizations/${organizationId}`, null, organizationRequest);
         return rp.patch(options);
     }
 
-    public async deleteOrganization(organizationId: number): Promise<void> {
+    public async deleteOrganizationById(organizationId: number): Promise<void> {
         const options = getOptions(communityServiceURL, `/organizations/${organizationId}`);
         return rp.delete(options);
     }

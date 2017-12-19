@@ -2,8 +2,10 @@
 
 import * as rp from "request-promise";
 
+import IComponentPaginated from "./interface/IComponentResponse";
 import IManufacturerRequest from "./interface/IManufacturerRequest";
 import IManufacturerResponse from "./interface/IManufacturerResponse";
+import IManufacturerPaginated from "./interface/IManufacturerResponse";
 
 import IManufacturerService from "./IManufacturerService";
 
@@ -16,7 +18,7 @@ const supplyServiceURL = config.Services.Supply.url + config.Services.Supply.por
 
 class ManufacturerService implements IManufacturerService {
 
-    public async getManufacturers(page?: number, size?: number): Promise<IManufacturerResponse[]> {
+    public async getManufacturers(page: number, size: number): Promise<IManufacturerPaginated[]> {
         const options = getOptions(supplyServiceURL, `/manufacturers`, {page, size});
         return rp.get(options);
     }
@@ -26,22 +28,22 @@ class ManufacturerService implements IManufacturerService {
         return rp.post(options);
     }
 
-    public async getManufacturer(manufacturerId: number): Promise<IManufacturerResponse> {
+    public async getManufacturerById(manufacturerId: number): Promise<IManufacturerResponse> {
         const options = getOptions(supplyServiceURL, `/manufacturers/${manufacturerId}`);
         return rp.get(options);
     }
 
-    public async updateManufacturer(manufacturerId: number, manufacturerRequest: IManufacturerRequest): Promise<IManufacturerResponse> {
+    public async updateManufacturerById(manufacturerId: number, manufacturerRequest: IManufacturerRequest): Promise<IManufacturerResponse> {
         const options = getOptions(supplyServiceURL, `/manufacturers/${manufacturerId}`, null, manufacturerRequest);
         return rp.patch(options);
     }
 
-    public async deleteManufacturer(manufacturerId: number): Promise<void> {
+    public async deleteManufacturerById(manufacturerId: number): Promise<void> {
         const options = getOptions(supplyServiceURL, `/manufacturers/${manufacturerId}`);
         return rp.delete(options);
     }
 
-    public async getComponents(manufacturerId: number, page?: number, size?: number): Promise<void> {
+    public async getComponents(manufacturerId: number, page?: number, size?: number): Promise<IComponentPaginated[]> {
         const options = getOptions(supplyServiceURL, `/manufacturers/${manufacturerId}/components`);
         return rp.get(options);
     }

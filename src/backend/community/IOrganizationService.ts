@@ -2,16 +2,17 @@
 
 import IOrganizationRequest from "./interface/IOrganizationRequest";
 import IOrganizationResponse from "./interface/IOrganizationResponse";
+import IOrganizationPaginated from "./interface/IOrganizationResponse";
 import ITeamResponse from "./interface/ITeamResponse";
 import IUserResponse from "./interface/IUserResponse";
 
 export default interface IOrganizationService {
-    getOrganizations(page: number, size: number): Promise<IOrganizationResponse[]>;
+    getOrganizations(page: number, size: number): Promise<IOrganizationPaginated[]>;
     createOrganization(organizationRequest: IOrganizationRequest): Promise<{ id: number; }>;
     getOrganizationById(organizationId: number): Promise<IOrganizationResponse>;
     getOrganizationBy(params): Promise<IOrganizationResponse>;
-    updateOrganization(organizationId: number, organizationRequest: IOrganizationRequest): Promise<IOrganizationResponse>;
-    deleteOrganization(organizationId: number): Promise<void>;
+    updateOrganizationById(organizationId: number, organizationRequest: IOrganizationRequest): Promise<IOrganizationResponse>;
+    deleteOrganizationById(organizationId: number): Promise<void>;
 
     setOwner(organizationId: number, userId: number): Promise<void>;
     getOwner(organizationId: number): Promise<IUserResponse>;

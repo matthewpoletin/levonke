@@ -1,5 +1,7 @@
 "use strict";
 
+import IPaginated from "../../IPaginated";
+
 export default interface IUserResponse {
     id: number;
     username?: string;
@@ -9,4 +11,8 @@ export default interface IUserResponse {
     pubEmail?: string;
     ghLink?: string;
     fbLink?: string;
+}
+
+export interface IUserPaginated extends IPaginated {
+    content: IUserResponse[];
 }

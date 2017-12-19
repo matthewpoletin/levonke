@@ -10,7 +10,7 @@ export default interface ITeamService {
     getTeams(page?: number, size?: number): Promise<ITeamResponse[]>;
     createTeam(teamRequest: ITeamRequest): Promise<{ id: number; }>;
     getTeamById(id: number): Promise<ITeamResponse>;
-    getTeamByName(teamName: string): Promise<ITeamResponse>;
+    getTeamBy(params): Promise<ITeamResponse>;
     updateTeamById(id: number, teamRequest: ITeamRequest): Promise<ITeamResponse>;
     deleteTeamById(id: number): Promise<void>;
 

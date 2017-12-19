@@ -9,7 +9,7 @@ export default interface IOrganizationService {
     getOrganizations(page: number, size: number): Promise<IOrganizationResponse[]>;
     createOrganization(organizationRequest: IOrganizationRequest): Promise<{ id: number; }>;
     getOrganizationById(organizationId: number): Promise<IOrganizationResponse>;
-    getOrganizationByName(organizationId: string): Promise<IOrganizationResponse>;
+    getOrganizationBy(params): Promise<IOrganizationResponse>;
     updateOrganization(organizationId: number, organizationRequest: IOrganizationRequest): Promise<IOrganizationResponse>;
     deleteOrganization(organizationId: number): Promise<void>;
 

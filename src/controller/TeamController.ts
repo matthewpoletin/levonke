@@ -51,10 +51,10 @@ export default class TeamController extends AbstractController {
         }
     }
 
-    public static async getTeamByName(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const teamName: string = req.params.teamName;
+    public static async getTeamBy(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const teamName: string = req.query.name;
         try {
-            const teamResponse: ITeamResponse = await TeamService.getTeamByName(teamName);
+            const teamResponse: ITeamResponse = await TeamService.getTeamBy({name: teamName});
             res.json(teamResponse);
             return next();
         } catch (error) {

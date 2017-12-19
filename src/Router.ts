@@ -15,19 +15,18 @@ export default function Router(server: restify.Server) {
     // USERS
     server.get("/users", UserController.getUsers);
     server.post("/users", UserController.createUser);
-    server.get("/users/:userId", UserController.getUser);
-    server.get("/users/username/:username", UserController.getUserByUsername);
-    server.get("/users/email/:email", UserController.getUserByEmail);
-    server.patch("/users/:userId", UserController.updateUser);
-    server.del("/users/:userId", UserController.deleteUser);
+    server.get("/users/by", UserController.getUserBy);
+    server.get("/users/:userId", UserController.getUserById);
+    server.patch("/users/:userId", UserController.updateUserById);
+    server.del("/users/:userId", UserController.deleteUserById);
 
     server.get("/users/:userId/teams", UserController.getTeams);
 
     // ORGANIZATIONS
     server.get("/organizations", OrganizationController.getOrganizations);
     server.post("/organizations", OrganizationController.createOrganization);
+    server.get("/organizations/by", OrganizationController.getOrganizationBy);
     server.get("/organizations/:organizationId", OrganizationController.getOrganizationById);
-    server.get("/organizations/name/:organizationName", OrganizationController.getOrganizationByName);
     server.patch("/organizations/:organizationId", OrganizationController.updateOrganizationById);
     server.del("/organizations/:organizationId", OrganizationController.deleteOrganizationById);
 
@@ -41,8 +40,8 @@ export default function Router(server: restify.Server) {
     // TEAMS
     server.get("/teams", TeamController.getTeams);
     server.post("/teams", TeamController.createTeam);
+    server.get("/teams/by", TeamController.getTeamBy);
     server.get("/teams/:teamId", TeamController.getTeamById);
-    server.get("/teams/name/:teamName", TeamController.getTeamByName);
     server.patch("/teams/:teamId", TeamController.updateTeamById);
     server.del("/teams/:teamId", TeamController.deleteTeamById);
 

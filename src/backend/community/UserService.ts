@@ -31,13 +31,8 @@ class UserService implements IUserService {
         return rp.get(options);
     }
 
-    public async getUserByUsername(username: string): Promise<IUserResponse> {
-        const options = getOptions(communityServiceURL, `/users/username/${username}`);
-        return rp.get(options);
-    }
-
-    public async getUserByEmail(email: string): Promise<IUserResponse> {
-        const options = getOptions(communityServiceURL, `/users/email/${email}`);
+    public async getUserBy(params): Promise<IUserResponse> {
+        const options = getOptions(communityServiceURL, `/users/by`, params);
         return rp.get(options);
     }
 

@@ -24,7 +24,7 @@ class TeamService implements ITeamService {
     }
 
     public async createTeam(teamRequest: ITeamRequest): Promise<{ id: number; }> {
-        const options = getOptions(communityServiceURL, `teams`, null, teamRequest);
+        const options = getOptions(communityServiceURL, `/teams`, null, teamRequest);
         return rp.post(options);
     }
 
@@ -33,8 +33,8 @@ class TeamService implements ITeamService {
         return rp.get(options);
     }
 
-    public async getTeamByName(teamName: string): Promise<ITeamResponse> {
-        const options = getOptions(communityServiceURL, `/teams/name/${teamName}`);
+    public async getTeamBy(params): Promise<ITeamResponse> {
+        const options = getOptions(communityServiceURL, `/teams/by`, params);
         return rp.get(options);
     }
 

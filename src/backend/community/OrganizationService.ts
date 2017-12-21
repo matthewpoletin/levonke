@@ -18,8 +18,8 @@ const communityServiceURL = config.Services.Community.url + config.Services.Comm
 
 class OrganizationService implements IOrganizationService {
 
-    public async getOrganizations(page: number, size: number): Promise<IOrganizationPaginated[]> {
-        const options = getOptions(communityServiceURL, `/organizations`, {page, size});
+    public async getOrganizations(page: number, size: number, name?: string): Promise<IOrganizationPaginated> {
+        const options = getOptions(communityServiceURL, `/organizations`, {page, size, name});
         return rp.get(options);
     }
 

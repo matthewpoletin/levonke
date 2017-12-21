@@ -97,10 +97,12 @@ export default class VersionController extends AbstractController {
     }
 
     public static async getComponents(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const page = parseInt(req.query.page, 10) || 0;
+        const size = parseInt(req.query.size, 10) || 25;
         const versionId: number = parseInt(req.params.versionId, 10);
-        const componentResponsePromises = []; // -> массив Promise
+        const componentResponsePromises = [];
         try {
-            const componentUUIDResponses: IComponentResponse[] = await VersionService.getComponents(versionId);
+            const componentUUIDResponses: IComponentResponse[] = await VersionService.getComponents(versionId, page, size);
             try {
                 componentUUIDResponses.forEach((element) => {
                     const uuid = element.uuid;
@@ -108,10 +110,12 @@ export default class VersionController extends AbstractController {
                 });
                 const componentResponses: IComponentResponse[] = await Promise.all(componentResponsePromises);
                 res.json(componentResponses);
+                // return next();
             } catch (error) {
+                console.log(error);
                 // VersionController.errorResponse(error, res, next, `VersionService { getComponents: versionId = ${versionId} } error`);
+                res.json(componentUUIDResponses);
             }
-            res.json(componentUUIDResponses);
             return next();
         } catch (error) {
             VersionController.errorResponse(error, res, next, `VersionService { getComponents: versionId = ${versionId} } error`);

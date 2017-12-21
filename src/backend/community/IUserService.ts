@@ -6,7 +6,7 @@ import IUserResponse from "./interface/IUserResponse";
 import IUserPaginated from "./interface/IUserResponse";
 
 export default interface IUserService {
-    getUsers(page?: number, size?: number, query?: string): Promise<IUserPaginated[]>;
+    getUsers(page?: number, size?: number, query?: string): Promise<IUserPaginated>;
     createUser(userRequest: IUserRequest): Promise<{ id: number; }>;
     getUserById(userId: number): Promise<IUserResponse>;
     getUserBy(params): Promise<IUserResponse>;

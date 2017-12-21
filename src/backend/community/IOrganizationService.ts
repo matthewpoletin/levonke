@@ -7,7 +7,7 @@ import ITeamResponse from "./interface/ITeamResponse";
 import IUserResponse from "./interface/IUserResponse";
 
 export default interface IOrganizationService {
-    getOrganizations(page: number, size: number): Promise<IOrganizationPaginated[]>;
+    getOrganizations(page: number, size: number, name: string): Promise<IOrganizationPaginated>;
     createOrganization(organizationRequest: IOrganizationRequest): Promise<{ id: number; }>;
     getOrganizationById(organizationId: number): Promise<IOrganizationResponse>;
     getOrganizationBy(params): Promise<IOrganizationResponse>;

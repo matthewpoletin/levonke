@@ -7,15 +7,22 @@ import AbstractController from "./AbstractController";
 import OrganizationService from "../backend/community/OrganizationService";
 
 import IOrganizationRequest from "../backend/community/interface/IOrganizationRequest";
+import IOrganizationPaginated from "../backend/community/interface/IOrganizationResponse";
 
 export default class OrganizationController extends AbstractController {
 
     public static async getOrganizations(req: restify.Request, res: restify.Response, next: restify.Next) {
         const page: number = parseInt(req.query.page, 10) || 0;
         const size: number = parseInt(req.query.size, 10) || 25;
+        const name: string = req.query.name;
         try {
-            const organizationResponses = await OrganizationService.getOrganizations(page, size);
-            res.json(organizationResponses);
+            let organizationsResponse: IOrganizationPaginated = null;
+            if (name) {
+                organizationsResponse = await OrganizationService.getOrganizations(page, size, name);
+            } else {
+                organizationsResponse = await OrganizationService.getOrganizations(page, size);
+            }
+            res.json(organizationsResponse);
             return next();
         } catch (error) {
             OrganizationController.errorResponse(error, res, next, `OrganizationService { getOrganizations } error`);

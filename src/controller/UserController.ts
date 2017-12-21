@@ -9,6 +9,7 @@ import UserService from "../backend/community/UserService";
 import ITeamResponse from "../backend/community/interface/ITeamResponse";
 import IUserRequest from "../backend/community/interface/IUserRequest";
 import IUserResponse from "../backend/community/interface/IUserResponse";
+import IUserPaginated from "../backend/community/interface/IUserResponse";
 
 export default class UserController extends AbstractController {
 
@@ -17,7 +18,7 @@ export default class UserController extends AbstractController {
         const size: number = parseInt(req.query.size, 10) || 25;
         const username: string = req.query.username;
         try {
-            let userResponses: IUserResponse[] = null;
+            let userResponses: IUserPaginated = null;
             if (username) {
                 userResponses = await UserService.getUsers(page, size, username);
             } else {

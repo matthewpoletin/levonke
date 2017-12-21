@@ -17,7 +17,7 @@ const communityServiceURL = config.Services.Community.url + config.Services.Comm
 
 class UserService implements IUserService {
 
-    public async getUsers(page?: number, size?: number, username?): Promise<IUserPaginated[]> {
+    public async getUsers(page?: number, size?: number, username?): Promise<IUserPaginated> {
         const options = getOptions(communityServiceURL, `/users`, {page, size, username});
         return rp.get(options);
     }

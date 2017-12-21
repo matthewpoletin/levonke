@@ -58,9 +58,10 @@ export default function Router(server: restify.Server) {
     // PROJECTS
     server.get("/projects", ProjectController.getProjects);
     server.post("/projects", ProjectController.createProject);
-    server.get("/projects/:projectId", ProjectController.getProject);
-    server.patch("/projects/:projectId", ProjectController.updateProject);
-    server.del("/projects/:projectId", ProjectController.deleteProject);
+    server.get("/projects/by", ProjectController.getProjectBy);
+    server.get("/projects/:projectId", ProjectController.getProjectById);
+    server.patch("/projects/:projectId", ProjectController.updateProjectById);
+    server.del("/projects/:projectId", ProjectController.deleteProjectById);
 
     server.get("/projects/:projectId/versions", ProjectController.getVersions);
     server.post("/projects/:projectId/versions/:versionId", ProjectController.addVersion);

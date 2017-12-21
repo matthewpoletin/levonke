@@ -159,7 +159,7 @@ export default class TeamController extends AbstractController {
                 res.json(201, projectResponse);
                 return next();
             } catch (error) {
-                await ProjectService.deleteProject(projectResponse.id);
+                await ProjectService.deleteProjectById(projectResponse.id);
                 res.send(503);
                 return next();
             }

@@ -8,14 +8,21 @@ import TeamService from "../backend/community/TeamService";
 import ProjectService from "../backend/elaboration/ProjectService";
 
 import IProjectRequest from "../backend/elaboration/interface/IProjectRequest";
+import IProjectPaginated from "../backend/elaboration/interface/IProjectResponse";
 
 export default class ProjectController extends AbstractController {
 
     public static async getProjects(req: restify.Request, res: restify.Response, next: restify.Next) {
         const page: number = parseInt(req.query.page, 10) || 0;
         const size: number = parseInt(req.query.size, 10) || 25;
+        const name: string = req.query.name;
         try {
-            const projectResponses = await ProjectService.getProjects(page, size);
+            let projectResponses: IProjectPaginated = null;
+            if (name) {
+                projectResponses = await ProjectService.getProjects(page, size, name);
+            } else {
+                projectResponses = await ProjectService.getProjects(page, size);
+            }
             res.json(projectResponses);
             return next();
         } catch (error) {
@@ -34,22 +41,33 @@ export default class ProjectController extends AbstractController {
         }
     }
 
-    public static async getProject(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async getProjectById(req: restify.Request, res: restify.Response, next: restify.Next) {
         const projectId: number = parseInt(req.params.projectId, 10);
         try {
-            const projectResponse = await ProjectService.getProject(projectId);
+            const projectResponse = await ProjectService.getProjectById(projectId);
             res.json(projectResponse);
             return next();
         } catch (error) {
-            ProjectController.errorResponse(error, res, next, `ProjectService { getProject: projectId = ${projectId}} error`);
+            ProjectController.errorResponse(error, res, next, `ProjectService { getProjectById: projectId = ${projectId}} error`);
         }
     }
 
-    public static async updateProject(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async getProjectBy(req: restify.Request, res: restify.Response, next: restify.Next) {
+        const projectName: string = req.query.name;
+        try {
+            const projectResponse = await ProjectService.getProjectBy(projectName);
+            res.json(projectResponse);
+            return next();
+        } catch (error) {
+            ProjectController.errorResponse(error, res, next, `ProjectService { getProjectBy: projectName = ${projectName}} error`);
+        }
+    }
+
+    public static async updateProjectById(req: restify.Request, res: restify.Response, next: restify.Next) {
         const projectId: number = parseInt(req.params.projectId, 10);
         const projectRequest = req.body;
         try {
-            const projectResponse = await ProjectService.updateProject(projectId, projectRequest);
+            const projectResponse = await ProjectService.updateProjectById(projectId, projectRequest);
             res.json(projectResponse);
             return next();
         } catch (error) {
@@ -57,10 +75,10 @@ export default class ProjectController extends AbstractController {
         }
     }
 
-    public static async deleteProject(req: restify.Request, res: restify.Response, next: restify.Next) {
+    public static async deleteProjectById(req: restify.Request, res: restify.Response, next: restify.Next) {
         const projectId: number = parseInt(req.params.projectId, 10);
         try {
-            await ProjectService.deleteProject(projectId);
+            await ProjectService.deleteProjectById(projectId);
             res.send(204);
             return next();
         } catch (error) {
@@ -94,7 +112,7 @@ export default class ProjectController extends AbstractController {
     public static async getTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
         const projectId: number = parseInt(req.params.projectId, 10);
         try {
-            const teamId = (await ProjectService.getProject(projectId)).id;
+            const teamId = (await ProjectService.getProjectById(projectId)).id;
             const teamResponse = await TeamService.getTeamById(teamId);
             res.json(teamResponse);
             return next();
@@ -102,5 +120,4 @@ export default class ProjectController extends AbstractController {
             ProjectController.errorResponse(error, res, next, `ProjectService { getTram: projectId = ${projectId} } error`);
         }
     }
-
 }

@@ -17,8 +17,8 @@ const elaborationServiceURL = config.Services.Elaboration.url + config.Services.
 
 class ProjectService implements IProjectService {
 
-    public async getProjects(page?: number, size?: number): Promise<IProjectPaginated[]> {
-        const options = getOptions(elaborationServiceURL, `/projects`, {page, size});
+    public async getProjects(page?: number, size?: number, name?: string): Promise<IProjectPaginated> {
+        const options = getOptions(elaborationServiceURL, `/projects`, {page, size, name});
         return rp.get(options);
     }
 
@@ -27,17 +27,22 @@ class ProjectService implements IProjectService {
         return rp.post(options);
     }
 
-    public async getProject(projectId: number): Promise<IProjectResponse> {
+    public async getProjectById(projectId: number): Promise<IProjectResponse> {
         const options = getOptions(elaborationServiceURL, `/projects/${projectId}`);
         return rp.get(options);
     }
 
-    public async updateProject(projectId: number, projectRequest: IProjectRequest): Promise<IProjectResponse> {
+    public async getProjectBy(name: string): Promise<IProjectResponse> {
+        const options = getOptions(elaborationServiceURL, `/projects/by`, {name});
+        return rp.get(options);
+    }
+
+    public async updateProjectById(projectId: number, projectRequest: IProjectRequest): Promise<IProjectResponse> {
         const options = getOptions(elaborationServiceURL, `/projects/${projectId}`, null, projectRequest);
         return rp.patch(options);
     }
 
-    public async deleteProject(projectId: number): Promise<void> {
+    public async deleteProjectById(projectId: number): Promise<void> {
         const options = getOptions(elaborationServiceURL, `/projects/${projectId}`);
         return rp.delete(options);
     }
@@ -56,7 +61,6 @@ class ProjectService implements IProjectService {
         const options = getOptions(elaborationServiceURL, `/projects/${projectId}/versions/${versionId}`);
         return rp.post(options);
     }
-
 }
 
 export default new ProjectService();

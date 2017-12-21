@@ -18,7 +18,7 @@ ProjectServiceMock.setup((service) => service.createProject(TypeMoq.It.isAny()))
         id: Math.ceil(Math.random() * 100),
     }));
 
-ProjectServiceMock.setup((service) => service.getProject(TypeMoq.It.isAny()))
+ProjectServiceMock.setup((service) => service.getProjectById(TypeMoq.It.isAny()))
     .returns(async (id: number) => ({
         id,
         name: rand.randomStringAlpha(8),
@@ -27,7 +27,7 @@ ProjectServiceMock.setup((service) => service.getProject(TypeMoq.It.isAny()))
         teamId: rand.generateId(),
     }));
 
-ProjectServiceMock.setup((service) => service.updateProject(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
+ProjectServiceMock.setup((service) => service.updateProjectById(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
     .returns(async (id: number, project: IProjectRequest) => ({
         id,
         name: rand.randomStringAlpha(8),
@@ -36,7 +36,7 @@ ProjectServiceMock.setup((service) => service.updateProject(TypeMoq.It.isAny(), 
         teamId: rand.generateId(),
     }));
 
-ProjectServiceMock.setup((service) => service.deleteProject(TypeMoq.It.isAny()))
+ProjectServiceMock.setup((service) => service.deleteProjectById(TypeMoq.It.isAny()))
     .returns(async (id: number) => undefined);
 
 export default ProjectServiceMock;

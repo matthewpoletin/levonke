@@ -51,30 +51,30 @@ describe("ProjectController test", () => {
     });
 
 
-    it("getProject", async () => {
+    it("getProjectById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await projectController.getProject(req, res, next);
+        await projectController.getProjectById(req, res, next);
 
-        ProjectServiceMock.verify((service) => service.getProject(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        ProjectServiceMock.verify((service) => service.getProjectById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateProjectResponse(res._object);
     });
 
-    it("updateProject", async () => {
+    it("updateProjectById", async () => {
         const req = new RequestMock().setParams({id: 1}).setBody({});
         const res = new ResponseMock();
-        await projectController.updateProject(req, res, next);
+        await projectController.updateProjectById(req, res, next);
 
-        ProjectServiceMock.verify((service) => service.updateProject(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
+        ProjectServiceMock.verify((service) => service.updateProjectById(TypeMoq.It.isAnyNumber(), TypeMoq.It.isAny()), TypeMoq.Times.once());
         validateProjectResponse(res._object);
     });
 
-    it("deleteProject", async () => {
+    it("deleteProjectById", async () => {
         const req = new RequestMock().setParams({id: 1});
         const res = new ResponseMock();
-        await projectController.deleteProject(req, res, next);
+        await projectController.deleteProjectById(req, res, next);
 
-        ProjectServiceMock.verify((service) => service.deleteProject(TypeMoq.It.isAny()), TypeMoq.Times.once());
+        ProjectServiceMock.verify((service) => service.deleteProjectById(TypeMoq.It.isAny()), TypeMoq.Times.once());
         assert.strictEqual(res._code, 204, "HttpResponseCode 204");
     });
 

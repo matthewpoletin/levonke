@@ -88,8 +88,10 @@ export default class ProjectController extends AbstractController {
 
     public static async getVersions(req: restify.Request, res: restify.Response, next: restify.Next) {
         const projectId: number = parseInt(req.params.projectId, 10);
+        const page: number = parseInt(req.params.page, 10) || 0;
+        const size: number = parseInt(req.params.size, 10) || 25;
         try {
-            const versionResponses = await ProjectService.getVersions(projectId);
+            const versionResponses = await ProjectService.getVersions(projectId, page, size);
             res.json(versionResponses);
             return next();
         } catch (error) {

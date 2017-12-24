@@ -7,7 +7,7 @@ import ITeamResponse from "./interface/ITeamResponse";
 import ITeamPaginated from "./interface/ITeamResponse";
 
 export default interface ITeamService {
-    getTeams(page?: number, size?: number): Promise<ITeamPaginated[]>;
+    getTeams(page?: number, size?: number, name?: string): Promise<ITeamPaginated>;
     createTeam(teamRequest: ITeamRequest): Promise<{ id: number; }>;
     getTeamById(id: number): Promise<ITeamResponse>;
     getTeamBy(params): Promise<ITeamResponse>;

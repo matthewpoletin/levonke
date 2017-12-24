@@ -40,7 +40,7 @@ export default class ComponentController extends AbstractController {
             res.json(componentResponse);
             return next();
         } catch (error) {
-            ComponentController.errorResponse(error, res, next, `ComponentService { getComponent: componentId = ${componentId}} error`);
+            ComponentController.errorResponse(error, res, next, `ComponentService { getComponentById: componentId = ${componentId}} error`);
         }
     }
 
@@ -51,7 +51,7 @@ export default class ComponentController extends AbstractController {
             res.json(componentResponse);
             return next();
         } catch (error) {
-            ComponentController.errorResponse(error, res, next, `ComponentService { updateComponent: componentUUID = ${componentUUID} } error`);
+            ComponentController.errorResponse(error, res, next, `ComponentService { getComponentByUUID: componentUUID = ${componentUUID} } error`);
         }
     }
 
@@ -63,7 +63,7 @@ export default class ComponentController extends AbstractController {
             res.json(componentResponse);
             return next();
         } catch (error) {
-            ComponentController.errorResponse(error, res, next, `ComponentService { updateComponent: componentId = ${componentId} } error`);
+            ComponentController.errorResponse(error, res, next, `ComponentService { updateComponentById: componentId = ${componentId} } error`);
         }
     }
 
@@ -74,7 +74,7 @@ export default class ComponentController extends AbstractController {
             res.send(204);
             return next();
         } catch (error) {
-            ComponentController.errorResponse(error, res, next, `ComponentService { deleteComponent: componentId = ${componentId} } error`);
+            ComponentController.errorResponse(error, res, next, `ComponentService { deleteComponentById: componentId = ${componentId} } error`);
         }
     }
 

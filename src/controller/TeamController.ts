@@ -11,17 +11,24 @@ import ProjectService from "../backend/elaboration/ProjectService";
 import IOrganizationResponse from "../backend/community/interface/IOrganizationResponse";
 import ITeamRequest from "../backend/community/interface/ITeamRequest";
 import ITeamResponse from "../backend/community/interface/ITeamResponse";
+import ITeamPaginated from "../backend/community/interface/ITeamResponse";
+import IUserResponse from "../backend/community/interface/IUserResponse";
 import IProjectRequest from "../backend/elaboration/interface/IProjectRequest";
 import IProjectResponse from "../backend/elaboration/interface/IProjectResponse";
-import IUserResponse from "../backend/community/interface/IUserResponse";
 
 export default class TeamController extends AbstractController {
 
     public static async getTeams(req: restify.Request, res: restify.Response, next: restify.Next) {
         const page = parseInt(req.query.page, 10) || 0;
         const size = parseInt(req.query.size, 10) || 25;
+        const name = req.query.name;
         try {
-            const teamResponses = await TeamService.getTeams(page, size);
+            let teamResponses: ITeamPaginated;
+            if (name) {
+                teamResponses = await TeamService.getTeams(page, size, name);
+            } else {
+                teamResponses = await TeamService.getTeams(page, size);
+            }
             res.json(teamResponses);
             return next();
         } catch (error) {

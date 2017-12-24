@@ -19,8 +19,8 @@ const elaborationServiceURL = config.Services.Elaboration.url + config.Services.
 
 class TeamService implements ITeamService {
 
-    public async getTeams(page?: number, size?: number): Promise<ITeamPaginated[]> {
-        const options = getOptions(communityServiceURL, `/teams`, {page, size});
+    public async getTeams(page?: number, size?: number, name?: string): Promise<ITeamPaginated> {
+        const options = getOptions(communityServiceURL, `/teams`, { page, size, name });
         return rp.get(options);
     }
 

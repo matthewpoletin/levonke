@@ -2,6 +2,7 @@
 
 import * as restify from "restify";
 
+import AuthController from "./controller/AuthController";
 import ComponentController from "./controller/ComponentController";
 import ManufacturerController from "./controller/ManufacturerController";
 import OrganizationController from "./controller/OrganizationController";
@@ -11,6 +12,11 @@ import UserController from "./controller/UserController";
 import VersionController from "./controller/VersionController";
 
 export default function Router(server: restify.Server) {
+
+    // AUTH
+    server.post("/auth/login", AuthController.login);
+    server.post("/auth/refresh", AuthController.refresh);
+    server.post("/auth/logout", AuthController.logout);
 
     // USERS
     server.get("/users", UserController.getUsers);

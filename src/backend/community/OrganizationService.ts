@@ -1,7 +1,5 @@
 "use strict";
 
-import * as rp from "request-promise";
-
 import IOrganizationRequest from "./interface/IOrganizationRequest";
 import IOrganizationResponse from "./interface/IOrganizationResponse";
 import IOrganizationPaginated from "./interface/IOrganizationResponse";
@@ -13,6 +11,9 @@ import getOptions from "../../Options";
 import ITeamResponse from "./interface/ITeamResponse";
 
 import config from "../../../IConfig";
+
+import requestWrapper from "../authrequest";
+const rp = requestWrapper({id: 3, secret: "qULETS2mSjRKMgNppMSutTPb4xb1IzqxmbNoWv9HHYoIFMuZUZ"});
 
 const communityServiceURL = config.Services.Community.url + config.Services.Community.port + config.Services.Community.base;
 

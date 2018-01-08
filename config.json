@@ -14,6 +14,19 @@
       "url": "http://localhost:",
       "port": 8444,
       "base": "/api/supply"
+    },
+    "Storage": {
+      "url": "http://localhost:",
+      "port": 8445,
+      "base": "/api/storage"
+    },
+    "Auth": {
+      "url": "http://localhost:",
+      "port": 8446,
+      "base": "/api/auth"
     }
-  }
+  },
+  "NoAuthCheckUrl": [
+    "/auth/*"
+  ]
 }

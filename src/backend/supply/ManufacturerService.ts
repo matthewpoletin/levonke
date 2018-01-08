@@ -1,7 +1,5 @@
 "use strict";
 
-import * as rp from "request-promise";
-
 import IComponentPaginated from "./interface/IComponentResponse";
 import IManufacturerRequest from "./interface/IManufacturerRequest";
 import IManufacturerResponse from "./interface/IManufacturerResponse";
@@ -12,6 +10,9 @@ import IManufacturerService from "./IManufacturerService";
 import getOptions from "./../../Options";
 
 import config from "../../../IConfig";
+
+import requestWrapper from "../authrequest";
+const rp = requestWrapper({id: 3, secret: "qULETS2mSjRKMgNppMSutTPb4xb1IzqxmbNoWv9HHYoIFMuZUZ"});
 
 const supplyServiceURL = config.Services.Supply.url + config.Services.Supply.port + config.Services.Supply.base;
 

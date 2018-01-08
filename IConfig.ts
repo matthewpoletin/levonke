@@ -17,7 +17,18 @@ interface IConfig {
             port: string;
             base: string;
         },
+        Storage: {
+            url: string;
+            port: string;
+            base: string;
+        },
+        Auth: {
+            url: string;
+            port: string;
+            base: string;
+        },
     };
+    NoAuthCheckUrl: string[];
 }
 
 // noinspection TsLint

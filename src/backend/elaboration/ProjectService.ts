@@ -1,7 +1,5 @@
 "use strict";
 
-import * as rp from "request-promise";
-
 import IProjectRequest from "./interface/IProjectRequest";
 import IProjectResponse from "./interface/IProjectResponse";
 import IProjectPaginated from "./interface/IProjectResponse";
@@ -12,6 +10,9 @@ import IProjectService from "./IProjectService";
 import getOptions from "../../Options";
 
 import config from "../../../IConfig";
+
+import requestWrapper from "../authrequest";
+const rp = requestWrapper({id: 3, secret: "qULETS2mSjRKMgNppMSutTPb4xb1IzqxmbNoWv9HHYoIFMuZUZ"});
 
 const elaborationServiceURL = config.Services.Elaboration.url + config.Services.Elaboration.port + config.Services.Elaboration.base;
 

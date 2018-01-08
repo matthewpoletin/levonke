@@ -5,6 +5,7 @@ import * as restify from "restify";
 import requestLogging from "./src/RequestLogging";
 
 import Logger from "./Logger";
+import authCheck from "./src/middleware/authcheck";
 import cors from "./src/middleware/cors";
 import unknownMethodHandler from "./src/middleware/methodnotallowed";
 import Router from "./src/Router";
@@ -25,6 +26,7 @@ class App {
         this.server.use(restify.plugins.queryParser());
         this.server.use(restify.plugins.bodyParser());
         this.server.use(requestLogging());
+        this.server.use(authCheck());
         this.server.use(cors());
         this.auditLogging();
         this.port = port;

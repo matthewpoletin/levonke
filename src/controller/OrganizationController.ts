@@ -131,16 +131,4 @@ export default class OrganizationController extends AbstractController {
         }
     }
 
-    public static async removeTeam(req: restify.Request, res: restify.Response, next: restify.Next) {
-        const organizationId: number = parseInt(req.params.organizationId, 10);
-        const teamId: number = parseInt(req.params.teamId, 10);
-        try {
-            await OrganizationService.removeTeam(organizationId, teamId);
-            res.send(204);
-            return next();
-        } catch (error) {
-            OrganizationController.errorResponse(error, res, next, `OrganizationService { removeTeam: organizationId = ${organizationId}; teamId = ${teamId} } error`);
-        }
-    }
-
 }

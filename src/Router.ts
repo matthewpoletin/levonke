@@ -34,8 +34,7 @@ export default function Router(server: restify.Server) {
     server.get("/organizations/:organizationId/owner", OrganizationController.getOwner);
 
     server.get("/organizations/:organizationId/teams", OrganizationController.getTeams);
-    server.post("/organizations/:organizationId/teams/:organizationId", OrganizationController.addTeam);
-    server.del("/organizations/:organizationId/teams/:organizationId", OrganizationController.removeTeam);
+    server.post("/organizations/:organizationId/teams/:teamId", OrganizationController.addTeam);
 
     // TEAMS
     server.get("/teams", TeamController.getTeams);

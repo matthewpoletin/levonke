@@ -10,5 +10,4 @@ export default interface IUserRequest {
     pubEmail?: string;
     ghLink?: string;
     fbLink?: string;
-    password?: string;
 }

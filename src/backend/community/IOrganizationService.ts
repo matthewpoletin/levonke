@@ -19,5 +19,4 @@ export default interface IOrganizationService {
 
     getTeams(organizationId: number): Promise<ITeamResponse[]>;
     addTeam(organizationId: number, teamId: number): Promise<void>;
-    removeTeam(organizationId: number, teamId: number): Promise<void>;
 }

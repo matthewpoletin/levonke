@@ -13,7 +13,6 @@ export default interface IUserResponse {
     pubEmail?: string;
     ghLink?: string;
     fbLink?: string;
-    password?: string;
 }
 
 export interface IUserPaginated extends IPaginated {

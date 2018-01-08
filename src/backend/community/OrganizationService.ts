@@ -68,11 +68,6 @@ class OrganizationService implements IOrganizationService {
         return rp.post(options);
     }
 
-    public async removeTeam(organizationId: number, teamId: number): Promise<void> {
-        const options = getOptions(communityServiceURL, `/organizations/${organizationId}/teams/${teamId}`);
-        return rp.delete(options);
-    }
-
 }
 
 export default new OrganizationService();

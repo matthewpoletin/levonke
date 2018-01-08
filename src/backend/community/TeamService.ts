@@ -70,7 +70,7 @@ class TeamService implements ITeamService {
     }
 
     public async getOrganization(teamId: number): Promise<IOrganizationResponse> {
-        const options = getOptions(communityServiceURL, `teams/${teamId}/organization`);
+        const options = getOptions(communityServiceURL, `/teams/${teamId}/organization`);
         return rp.get(options);
     }
 

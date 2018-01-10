@@ -21,7 +21,7 @@ export default function authCheck() {
                 const accessToken = req.headers["access-token"].toString();
                 const indexOfDelimiter = accessToken.lastIndexOf(":");
                 if (indexOfDelimiter && parseInt(accessToken.slice(indexOfDelimiter + 1, accessToken.length), 10)) {
-                    req.username = (await authService.oAuthCheck({accessToken})).username;
+                    req.username = (await authService.OAuthCheck({accessToken})).username;
                 } else {
                     req.username = (await authService.check({accessToken})).username;
                 }

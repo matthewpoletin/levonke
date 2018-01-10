@@ -5,6 +5,7 @@ import * as restify from "restify";
 import AuthController from "./controller/AuthController";
 import ComponentController from "./controller/ComponentController";
 import ManufacturerController from "./controller/ManufacturerController";
+import OAuthController from "./controller/OAuthController";
 import OrganizationController from "./controller/OrganizationController";
 import ProjectController from "./controller/ProjectController";
 import TeamController from "./controller/TeamController";
@@ -15,8 +16,18 @@ export default function Router(server: restify.Server) {
 
     // AUTH
     server.post("/auth/login", AuthController.login);
+    server.post("/auth/check", AuthController.check);
     server.post("/auth/refresh", AuthController.refresh);
-    server.post("/auth/logout", AuthController.logout);
+    server.del("/auth/logout", AuthController.logout);
+
+    server.get("/auth/oauth/app", OAuthController.createApp);
+    server.get("/auth/oauth/app/:appId", OAuthController.getApp);
+
+    server.post("/auth/oauth/login", OAuthController.login);
+    server.post("/auth/oauth/token", OAuthController.getToken);
+    server.post("/auth/oauth/token/refresh", OAuthController.refreshToken);
+    server.post("/auth/oauth/token/check", OAuthController.checkToken);
+    server.del("/auth/oauth/token", OAuthController.deleteToken);
 
     // USERS
     server.get("/users", UserController.getUsers);
